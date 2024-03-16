@@ -1,16 +1,16 @@
 # TÍTULO DO PROJETO
 
-`CURSO`
+`Sistemas para Internet`
 
-`DISCIPLINA`
+`Desenvolvimento de Aplicações Móveis`
 
-`SEMESTRE`
+`5º Semestre`
 
 Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
 
 ## Integrantes
 
-* Nome completo do aluno 1
+* Ramon Vicente da Silva
 * Nome completo do aluno 2
 * Nome completo do aluno 3
 * Nome completo do aluno 4
