@@ -15,7 +15,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 * Victor Hugo Rodrigues Duhau
 * César Augusto
 * Rodolfo Cícero
-* Marcielen Mirian
+* Marcielen Mirian Barbosa
 
 ## Orientador
 
