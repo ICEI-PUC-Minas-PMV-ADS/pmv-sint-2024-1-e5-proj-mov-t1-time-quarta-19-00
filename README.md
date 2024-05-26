@@ -13,7 +13,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 * Ramon Vicente da Silva
 * Paulo Henrique Vieira Cândido
 * Victor Hugo Rodrigues Duhau
-* César Augusto
+* César Augusto Da Silva
 * Rodolfo Cícero
 * Marcielen Mirian Barbosa
 
