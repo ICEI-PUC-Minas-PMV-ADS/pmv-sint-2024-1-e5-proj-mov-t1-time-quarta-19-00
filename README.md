@@ -15,7 +15,7 @@ O projeto visa criar uma plataforma online, que facilite a colaboração entre i
 * Victor Hugo Rodrigues Duhau
 * César Augusto Da Silva
 * Rodolfo Cícero
-* Marcielen Mirian Barbosa
+* Marcielen Miriam Barbosa
 
 ## Orientador
 
