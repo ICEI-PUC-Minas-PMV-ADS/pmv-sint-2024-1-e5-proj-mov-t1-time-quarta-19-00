@@ -10,20 +10,21 @@ O projeto visa criar uma plataforma online, que facilite a colaboração entre i
 
 ## Integrantes
 
-* Ramon Vicente da Silva
-* Paulo Henrique Vieira Cândido
-* Victor Hugo Rodrigues Duhau
-* César Augusto Da Silva
-* Rodolfo Cícero
-* Marcielen Miriam Barbosa
+- Ramon Vicente da Silva
+- Paulo Henrique Vieira Cândido
+- Victor Hugo Rodrigues Duhau
+- César Augusto Da Silva
+- Rodolfo Cícero
+- Marcielen Miriam Barbosa.
 
 ## Orientador
 
-* Udo Fritzke Junior
+- Udo Fritzke Junior
 
 ## Instruções de utilização
 
 ### Preparação do ambiente de desenvolvimento
+
 1. Instale o Python:
 
 Se você ainda não tiver o Python instalado, faça o download e instale a versão mais recente do Python no site oficial: python.org.
@@ -41,6 +42,7 @@ Clone o repositório do projeto para o seu ambiente local.
 `git clone https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00.git`
 
 ### Instalação de dependências
+
 Atualize o gerenciador de pacotes:
 `pip install --upgrade pip`
 
@@ -48,6 +50,7 @@ Instale as dependências do prjeto:
 `pip install -r requirements.txt`
 
 ### Execução do código
+
 Execute o comando abaixo para executar o projeto:
 `uvicorn main:app`
 
