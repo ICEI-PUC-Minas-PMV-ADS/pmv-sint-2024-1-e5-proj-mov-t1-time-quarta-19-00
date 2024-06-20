@@ -1,15 +1,13 @@
 // Feed.js
+import usePosts from "@/dataHooks/usePosts";
+import { Link } from "expo-router";
 import React from "react";
 import { View, Text, Image, FlatList, StyleSheet } from "react-native";
 
-type PostsProps = {
+export type PostDTO = {
   id: string;
-  userName: string;
-  userAvatar: string;
-  postImage: string;
-  caption: string;
-  likes: number;
-  comments: number;
+  text: string;
+  imgLink: string;
 };
 
 export const posts = [
@@ -34,25 +32,43 @@ export const posts = [
   // Adicione mais posts conforme necessário
 ];
 
+// interface PostComponentProps {
+//   post: PostDTO;
+// }
+// const PostComponent = ({
+//   post
+// }: PostComponentProps) => {
+
+//   return (
+
+//   )
+// }
+
 const Feed = () => {
-  const renderItem = ({ item }: any) => (
+  const { data } = usePosts();
+  console.log(data);
+  const renderItem = ({ item }: { item: PostDTO }) => (
     <View style={styles.postContainer}>
       <View style={styles.header}>
-        <Image source={{ uri: item.userAvatar }} style={styles.avatar} />
-        <Text style={styles.userName}>{item.userName}</Text>
+        <Image source={{ uri: item.imgLink }} style={styles.avatar} />
+        <Text style={styles.userName}>{"item.userName"}</Text>
       </View>
-      <Image source={{ uri: item.postImage }} style={styles.postImage} />
+      {Boolean(item.imgLink.includes("http")) && (
+        <Image source={{ uri: item.imgLink }} style={styles.postImage} />
+      )}
       <View style={styles.footer}>
-        <Text style={styles.likes}>{item.likes} likes</Text>
-        <Text style={styles.caption}>{item.caption}</Text>
-        <Text style={styles.comments}>View all {item.comments} comments</Text>
+        <Text style={styles.caption}>{item.text.slice(0, 20) + "..."}</Text>
+        <Link href={`/post/${item.id}`}>Ler post completo</Link>
+        <Link href={`/comments/${item.id}`} style={styles.comments}>
+          Ver todos comentários
+        </Link>
       </View>
     </View>
   );
 
   return (
     <FlatList
-      data={posts}
+      data={data as PostDTO[]}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       style={styles.feed}
