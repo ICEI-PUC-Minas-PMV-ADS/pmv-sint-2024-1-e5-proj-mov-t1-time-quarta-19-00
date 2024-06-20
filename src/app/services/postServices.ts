@@ -8,4 +8,7 @@ export const postServices = {
   fetchPosts: async () => {
     return (await ApiServices.search(endpoints.posts)).data.reverse();
   },
+  fetchPostById: async (id: number) => {
+    return (await ApiServices.search(endpoints.posts + "/" + id)).data;
+  },
 };
