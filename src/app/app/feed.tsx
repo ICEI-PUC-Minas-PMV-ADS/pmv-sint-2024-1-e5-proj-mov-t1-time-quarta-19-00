@@ -1,8 +1,15 @@
 // Feed.js
 import usePosts from "@/dataHooks/usePosts";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React from "react";
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import {
+  ActivityIndicator,
+  Appbar,
+  Button,
+  Card,
+  Text,
+} from "react-native-paper";
 
 export type PostDTO = {
   id: string;
@@ -10,76 +17,75 @@ export type PostDTO = {
   imgLink: string;
 };
 
-const Feed = () => {
-  const { data } = usePosts();
-  console.log(data);
-  const renderItem = ({ item }: { item: PostDTO }) => (
-    <View style={styles.postContainer}>
-      <View style={styles.header}>
-        <Image source={{ uri: item.imgLink }} style={styles.avatar} />
-        <Text style={styles.userName}>{"item.userName"}</Text>
-      </View>
-      {Boolean(item.imgLink.includes("http")) && (
-        <Image source={{ uri: item.imgLink }} style={styles.postImage} />
-      )}
-      <View style={styles.footer}>
-        <Text style={styles.caption}>{item.text.slice(0, 20) + "..."}</Text>
-        <Link href={`/post/${item.id}`}>Ler post completo</Link>
-        <Link href={`/comments/${item.id}`} style={styles.comments}>
-          Ver todos comentários
-        </Link>
-      </View>
-    </View>
-  );
+const PostCard = ({ item }: { item?: PostDTO }) => {
+  const goToComments = () => {
+    router.replace(`/comments/${item?.id}`);
+  };
+
+  const goToPost = () => {
+    router.replace(`/post/${item?.id}`);
+  };
 
   return (
-    <FlatList
-      data={data as PostDTO[]}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      style={styles.feed}
-    />
+    <Card>
+      <Card.Cover
+        source={{
+          uri: item?.imgLink.includes("http")
+            ? item?.imgLink
+            : "https://picsum.photos/700",
+        }}
+      />
+      <Card.Title title={item?.text} subtitle={item?.text.slice(0, 20)} />
+      <Card.Actions>
+        <Button mode="text" onPress={goToComments}>
+          Ver comentários
+        </Button>
+        <Button mode="contained" onPress={goToPost}>
+          Ver tudo
+        </Button>
+      </Card.Actions>
+    </Card>
   );
 };
 
-const styles = StyleSheet.create({
+const Feed = () => {
+  const { data = [], isLoading, isError, error } = usePosts();
+
+  return (
+    <SafeAreaView style={style.wrapper}>
+      <Appbar.Header>
+        {/* <Appbar.BackAction /> */}
+        <Appbar.Content title="Feed" />
+      </Appbar.Header>
+      <ScrollView style={style.feed}>
+        <View style={style.container}>
+          {isLoading && <ActivityIndicator animating={true} />}
+          {isError && (
+            <Text>Houve um erro ao buscar os dados {error.message}</Text>
+          )}
+          {!isLoading &&
+            (data as PostDTO[]).map((post) => {
+              return <PostCard item={post} key={post.id} />;
+            })}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+const style = StyleSheet.create({
+  container: {
+    padding: 16,
+    display: "flex",
+    gap: 16,
+  },
   feed: {
-    flex: 1,
     backgroundColor: "#fff",
   },
-  postContainer: {
-    marginBottom: 20,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  userName: {
-    fontWeight: "bold",
-  },
-  postImage: {
-    width: "100%",
-    height: 400,
-  },
-  footer: {
-    padding: 10,
-  },
-  likes: {
-    fontWeight: "bold",
-  },
-  caption: {
-    marginTop: 5,
-  },
-  comments: {
-    marginTop: 5,
-    color: "gray",
+  wrapper: {
+    flex: 1,
+
+    backgroundColor: "#fff",
   },
 });
 
