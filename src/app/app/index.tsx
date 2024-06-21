@@ -1,120 +1,15 @@
-// Feed.js
-import usePosts from "@/dataHooks/usePosts";
-import { Link } from "expo-router";
-import React from "react";
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import { Redirect } from "expo-router";
 
-export type PostDTO = {
-  id: string;
-  text: string;
-  imgLink: string;
+const SwitchFeedAndLogin = () => {
+  const { loggedIn } = useSelector((state: RootState) => state.user);
+
+  if (loggedIn) {
+    return <Redirect href="/feed" />;
+  }
+
+  return <Redirect href="/login" />;
 };
 
-export const posts = [
-  {
-    id: "1",
-    userName: "user1",
-    userAvatar: "https://via.placeholder.com/150",
-    postImage: "https://via.placeholder.com/500",
-    caption: "This is a beautiful scenery!",
-    likes: 123,
-    comments: 12,
-  },
-  {
-    id: "2",
-    userName: "user2",
-    userAvatar: "https://via.placeholder.com/150",
-    postImage: "https://via.placeholder.com/500",
-    caption: "Enjoying the sunshine!",
-    likes: 456,
-    comments: 34,
-  },
-  // Adicione mais posts conforme necessário
-];
-
-// interface PostComponentProps {
-//   post: PostDTO;
-// }
-// const PostComponent = ({
-//   post
-// }: PostComponentProps) => {
-
-//   return (
-
-//   )
-// }
-
-const Feed = () => {
-  const { data } = usePosts();
-  console.log(data);
-  const renderItem = ({ item }: { item: PostDTO }) => (
-    <View style={styles.postContainer}>
-      <View style={styles.header}>
-        <Image source={{ uri: item.imgLink }} style={styles.avatar} />
-        <Text style={styles.userName}>{"item.userName"}</Text>
-      </View>
-      {Boolean(item.imgLink.includes("http")) && (
-        <Image source={{ uri: item.imgLink }} style={styles.postImage} />
-      )}
-      <View style={styles.footer}>
-        <Text style={styles.caption}>{item.text.slice(0, 20) + "..."}</Text>
-        <Link href={`/post/${item.id}`}>Ler post completo</Link>
-        <Link href={`/comments/${item.id}`} style={styles.comments}>
-          Ver todos comentários
-        </Link>
-      </View>
-    </View>
-  );
-
-  return (
-    <FlatList
-      data={data as PostDTO[]}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      style={styles.feed}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  feed: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  postContainer: {
-    marginBottom: 20,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  userName: {
-    fontWeight: "bold",
-  },
-  postImage: {
-    width: "100%",
-    height: 400,
-  },
-  footer: {
-    padding: 10,
-  },
-  likes: {
-    fontWeight: "bold",
-  },
-  caption: {
-    marginTop: 5,
-  },
-  comments: {
-    marginTop: 5,
-    color: "gray",
-  },
-});
-
-export default Feed;
+export default SwitchFeedAndLogin;
