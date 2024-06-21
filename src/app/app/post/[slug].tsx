@@ -49,23 +49,7 @@ const Post = () => {
         />
         <View style={styles.containerPostText}>
           <Text variant="titleLarge">Título do Post {castData.id}</Text>
-          <Text variant="bodyMedium">
-            {castData.text}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-            delectus eum numquam a nihil, odio cupiditate perferendis optio
-            repudiandae? Aliquid ad rem cumque molestias dolor veritatis veniam
-            optio pariatur tempora? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Suscipit reprehenderit obcaecati voluptatem quam
-            nihil ea in necessitatibus excepturi, quo eligendi accusamus facilis
-            quasi esse laudantium quisquam ducimus ullam fugit assumenda? Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Quo, eum debitis
-            excepturi omnis placeat perspiciatis tempore molestias saepe eveniet
-            quos molestiae dolores aspernatur sunt voluptates voluptas, quasi
-            similique quibusdam illum! Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Ipsam soluta provident vero itaque odio sed
-            voluptatum quaerat quasi. Ex ea corrupti laudantium maiores
-            consectetur consequuntur iusto, voluptatum illum nesciunt a!
-          </Text>
+          <Text variant="bodyMedium">{castData.text}</Text>
           <Button onPress={goToComments}>Ver comentários</Button>
         </View>
       </ScrollView>
