@@ -27,6 +27,10 @@ const RegisterInstitution = (props: Props) => {
     router.replace("/registerUser");
   };
 
+  const doLogin = () => {
+    router.replace("/login");
+  };
+
   return (
     <View>
       <Appbar.Header>
@@ -69,6 +73,9 @@ const RegisterInstitution = (props: Props) => {
           </Button>
           <Button mode="text" onPress={doRegisterUser}>
             Cadastrar-se como pessoa
+          </Button>
+          <Button mode="text" onPress={doLogin}>
+            Fazer Login
           </Button>
         </View>
       </View>
