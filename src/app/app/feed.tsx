@@ -1,5 +1,6 @@
 // Feed.js
 import usePosts from "@/dataHooks/usePosts";
+import { logout } from "@/store/features/userSlice";
 import { Link, router } from "expo-router";
 import React from "react";
 import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
@@ -10,6 +11,7 @@ import {
   Card,
   Text,
 } from "react-native-paper";
+import { useDispatch } from "react-redux";
 
 export type PostDTO = {
   id: string;
@@ -50,12 +52,18 @@ const PostCard = ({ item }: { item?: PostDTO }) => {
 
 const Feed = () => {
   const { data = [], isLoading, isError, error } = usePosts();
+  const dispatch = useDispatch();
 
+  const doLogout = () => {
+    dispatch(logout());
+    router.push("/");
+  };
   return (
     <SafeAreaView style={style.wrapper}>
       <Appbar.Header>
         {/* <Appbar.BackAction /> */}
         <Appbar.Content title="Feed" />
+        <Appbar.Action icon="logout" onPress={doLogout} />
       </Appbar.Header>
       <ScrollView style={style.feed}>
         <View style={style.container}>
