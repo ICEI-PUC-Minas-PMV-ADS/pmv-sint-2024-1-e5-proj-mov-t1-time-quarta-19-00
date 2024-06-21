@@ -1,11 +1,6 @@
-
-# Projeto de Interface
-
-<span style="color:red">Pré-requisitos: <a href="2-Especificação do Projeto.md"> Documentação de Especificação</a></span>
-
-Visão geral da interação do usuário com as funcionalidades que fazem parte do sistema sociotécnico (protótipo de telas).
-
 ## Projeto de Interface Hub Solidariedade
+
+
 
 ### Tela de Feed 
 _________________________________________________
@@ -18,15 +13,21 @@ _________________________________________________
 
 ![Login](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/1272946e-d8c7-4c67-8419-501aaff86673)
 
+
+
 ### Tela de Cadastro de Usuário 
 _________________________________________________
 
 ![Cadastro_usuario](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/c91ade7d-2ecb-4322-8348-d6761e7d485e)
 
+
+
 ### Tela de Cadastro de Instituição
 _________________________________________________
 
 ![Cadastro_instituição](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/897d6cc4-7ce7-40ed-b1dc-723ad8ee6655)
+
+
 
 ### Tela de Comentários
 _________________________________________________
