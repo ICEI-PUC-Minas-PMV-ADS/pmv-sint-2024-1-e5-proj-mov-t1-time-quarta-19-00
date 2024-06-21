@@ -4,9 +4,12 @@ from typing import List  # Import the List type
 from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate
 from models import Item, Institution, User, Comment, Post, PostLikes, UserFavorites
 from database import get_db
+from auth import router as auth_router
 
 # FastAPI app instance
 app = FastAPI()
+
+app.include_router(auth_router)
 
 # API endpoint to create an item
 @app.post("/items/", response_model=ItemResponse)
