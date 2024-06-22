@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import {
   ActivityIndicator,
-  Appbar,
   Button,
   Card,
   Divider,
@@ -24,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Post } from "@/services";
 import Header from "@/components/Header";
+import useAuth from "@/hooks/useAuth";
 
 export type PostDTO = {
   id: string;
@@ -112,6 +112,8 @@ const postStyles = StyleSheet.create({
 const Feed = () => {
   const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
   const data = cData as Post[];
+
+  const { isInstitution } = useAuth(true);
   const doRefetch = () => {
     refetch();
   };
@@ -150,7 +152,9 @@ const Feed = () => {
           <Button onPress={doRefetch}>Recarregar</Button>
         </View>
       </ScrollView>
-      <FAB icon="plus" style={style.fab} onPress={doRegisterPost} />
+      {isInstitution && (
+        <FAB icon="plus" style={style.fab} onPress={doRegisterPost} />
+      )}
     </SafeAreaView>
   );
 };
