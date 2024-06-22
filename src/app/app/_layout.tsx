@@ -14,6 +14,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 
+import { Provider as PaperProvider } from "react-native-paper";
+
 const queryClient = new QueryClient();
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -36,51 +38,53 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="index"
-              options={{
-                title: "Feed",
-              }}
-            />
-            <Stack.Screen
-              name="post/[slug]"
-              options={{
-                title: "Post",
-                headerBackButtonMenuEnabled: true,
-              }}
-            />
-            <Stack.Screen
-              name="comments/[slug]"
-              options={{
-                title: "Comentários",
-              }}
-            />
-            <Stack.Screen
-              name="login"
-              options={{
-                title: "Login",
-              }}
-            />
-            <Stack.Screen
-              name="registerUser"
-              options={{
-                title: "Cadastrar-se",
-              }}
-            />
-            <Stack.Screen
-              name="registerInstitution"
-              options={{
-                title: "Cadastrar-se (Instituição)",
-              }}
-            />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </QueryClientProvider>
-      </Provider>
-    </ThemeProvider>
+    <PaperProvider>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="index"
+                options={{
+                  title: "Feed",
+                }}
+              />
+              <Stack.Screen
+                name="post/[slug]"
+                options={{
+                  title: "Post",
+                  headerBackButtonMenuEnabled: true,
+                }}
+              />
+              <Stack.Screen
+                name="comments/[slug]"
+                options={{
+                  title: "Comentários",
+                }}
+              />
+              <Stack.Screen
+                name="login"
+                options={{
+                  title: "Login",
+                }}
+              />
+              <Stack.Screen
+                name="registerUser"
+                options={{
+                  title: "Cadastrar-se",
+                }}
+              />
+              <Stack.Screen
+                name="registerInstitution"
+                options={{
+                  title: "Cadastrar-se (Instituição)",
+                }}
+              />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </QueryClientProvider>
+        </Provider>
+      </ThemeProvider>
+    </PaperProvider>
   );
 }
