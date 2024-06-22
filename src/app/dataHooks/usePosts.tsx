@@ -1,5 +1,5 @@
 import { postServices } from "@/services";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const usePosts = (id: number | null = null) => {
   if (id) {
@@ -12,6 +12,13 @@ const usePosts = (id: number | null = null) => {
   return useQuery({
     queryKey: ["posts"],
     queryFn: postServices.fetchPosts,
+  });
+};
+
+export const usePostCreateMutation = () => {
+  return useMutation({
+    mutationFn: postServices.createPost,
+    mutationKey: ["posts"],
   });
 };
 
