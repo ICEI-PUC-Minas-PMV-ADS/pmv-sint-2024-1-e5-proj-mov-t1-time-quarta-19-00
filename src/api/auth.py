@@ -1,17 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Optional
 import jwt
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from database import get_db
+from models import User
 
 router = APIRouter()
-
-class User(BaseModel):
-    username: str
-    password: str
 
 def authenticate_user(username: str, password: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == username).first()
