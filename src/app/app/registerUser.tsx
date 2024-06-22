@@ -13,6 +13,7 @@ type UserRegisterData = User;
 const RegisterUser = (props: Props) => {
   const [userData, setUserData] = useState({} as UserRegisterData);
   const [error, setError] = useState("");
+  const [isInstitution, setIsInstitution] = useState(false);
 
   const handleData = (key: keyof UserRegisterData, value: string) => {
     setUserData({ ...userData, [key]: value });
@@ -34,7 +35,8 @@ const RegisterUser = (props: Props) => {
       userData?.email === "" ||
       userData?.password === "" ||
       userData?.name === "" ||
-      userData?.username === ""
+      userData?.username === "" ||
+      (isInstitution && userData?.cnpj === "")
     ) {
       setError("Preencha todos os dados");
     }
@@ -51,11 +53,19 @@ const RegisterUser = (props: Props) => {
 
   const submitData = async () => {
     try {
-      await mutateAsync(userData);
+      await mutateAsync({
+        ...userData,
+        isInstitution,
+        cnpj: isInstitution ? userData.cnpj : undefined,
+      });
       router.replace("/login");
     } catch (err) {
       setError("Erro ao cadastrar usuário");
     }
+  };
+
+  const doAsInstitution = () => {
+    setIsInstitution((current) => !current);
   };
 
   const doRegister = () => {
@@ -63,10 +73,6 @@ const RegisterUser = (props: Props) => {
       return;
     }
     submitData();
-  };
-
-  const doRegisterInstitution = () => {
-    router.replace("/registerInstitution");
   };
 
   const doLogin = () => {
@@ -104,9 +110,17 @@ const RegisterUser = (props: Props) => {
             value={userData.username}
             onChangeText={(text) => handleData("username", text)}
           />
+          {isInstitution && (
+            <TextInput
+              disabled={isIdle}
+              label="CNPJ"
+              value={userData.cnpj}
+              onChangeText={(text) => handleData("cnpj", text)}
+            />
+          )}
           <TextInput
             disabled={isIdle}
-            label="Password"
+            label="Senha"
             secureTextEntry
             value={userData.password}
             onChangeText={(text) => handleData("password", text)}
@@ -120,8 +134,10 @@ const RegisterUser = (props: Props) => {
           >
             Cadastrar-se
           </Button>
-          <Button mode="text" onPress={doRegisterInstitution}>
-            Cadastrar-se como uma instituição
+          <Button mode="text" onPress={doAsInstitution}>
+            {isInstitution
+              ? "Cadastrar-se como usuário"
+              : "Cadastrar-se como instituição"}
           </Button>
           <Button mode="text" onPress={doLogin}>
             Fazer login
