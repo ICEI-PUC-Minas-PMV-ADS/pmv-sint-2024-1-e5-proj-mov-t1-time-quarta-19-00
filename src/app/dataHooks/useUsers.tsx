@@ -1,7 +1,7 @@
 import { userServices } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-const usePosts = (id: number | null = null) => {
+export const useUsers = (id: number | null = null) => {
   if (id) {
     return useQuery({
       queryKey: ["users", id],
@@ -10,7 +10,7 @@ const usePosts = (id: number | null = null) => {
   }
 
   return useQuery({
-    queryKey: ["posts"],
+    queryKey: ["users"],
     queryFn: userServices.fetchUsers,
   });
 };
@@ -22,4 +22,11 @@ export const createUserMutation = () => {
   });
 };
 
-export default usePosts;
+export const userAuthMutation = () => {
+  return useMutation({
+    mutationFn: userServices.authUser,
+    mutationKey: ["users", "authUsers"],
+  });
+};
+
+export default useUsers;

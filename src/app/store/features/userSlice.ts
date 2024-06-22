@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
-  name: string;
-  email: string;
+  username: string;
+  access_token: string;
   loggedIn: boolean;
 }
 
 const initialState: UserState = {
-  name: "",
-  email: "",
+  access_token: "",
+  username: "",
   loggedIn: false,
 };
 
@@ -16,14 +16,17 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action) => {
-      state.name = action.payload.name;
-      state.email = action.payload.email;
+    login: (
+      state,
+      action: PayloadAction<Pick<UserState, "username" | "access_token">>
+    ) => {
+      state.username = action.payload.username;
+      state.access_token = action.payload.access_token;
       state.loggedIn = true;
     },
     logout: (state) => {
-      state.name = "";
-      state.email = "";
+      state.username = "";
+      state.access_token = "";
       state.loggedIn = false;
     },
   },

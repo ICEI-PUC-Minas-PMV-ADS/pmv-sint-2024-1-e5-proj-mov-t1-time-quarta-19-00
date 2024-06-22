@@ -25,6 +25,10 @@ export const userServices = {
     access_token: string;
     token_type: string;
   }> => {
-    return (await ApiServices.create(endpoints.auth, user)).data;
+    const form_data = new FormData();
+    form_data.append("username", user.username);
+    form_data.append("password", user.password);
+
+    return (await ApiServices.create(endpoints.auth, form_data)).data;
   },
 };
