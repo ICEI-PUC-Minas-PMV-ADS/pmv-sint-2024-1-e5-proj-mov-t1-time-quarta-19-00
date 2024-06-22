@@ -5,8 +5,11 @@ import { useSelector } from "react-redux";
 
 export const useAuth = (onlyData = false) => {
   const user = useSelector((state: RootState) => state.user);
+  const redirectToLogin = () => {
+    router.replace("/login");
+  };
 
-  if (onlyData) return user;
+  if (onlyData) return { ...user, redirectToLogin };
 
   useEffect(() => {
     if (!user?.loggedIn) {
@@ -14,7 +17,7 @@ export const useAuth = (onlyData = false) => {
     }
   }, [user?.loggedIn]);
 
-  return user;
+  return { ...user, redirectToLogin };
 };
 
 export default useAuth;
