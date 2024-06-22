@@ -7,14 +7,14 @@ import {
 } from "react-native";
 import React from "react";
 import usePosts from "@/dataHooks/usePosts";
-import { Link, router, useLocalSearchParams } from "expo-router";
-import { PostDTO } from "../feed";
-import { Appbar, Button, Text } from "react-native-paper";
+import { router, useLocalSearchParams } from "expo-router";
+import { Appbar, Button, Divider, Text } from "react-native-paper";
+import { Post as IPost } from "@/services";
 
 const Post = () => {
   const { slug } = useLocalSearchParams();
   const { data, isLoading } = usePosts(+(slug || 0) || null);
-  const castData = data as PostDTO;
+  const castData = data as IPost;
 
   if (isLoading) {
     return (
@@ -48,9 +48,17 @@ const Post = () => {
           }}
         />
         <View style={styles.containerPostText}>
-          <Text variant="titleLarge">Título do Post {castData.id}</Text>
+          <Text variant="titleLarge">{castData.title}</Text>
           <Text variant="bodyMedium">{castData.text}</Text>
-          <Button onPress={goToComments}>Ver comentários</Button>
+          <Divider style={styles.divider} />
+          <Text variant="bodyMedium">Postado por: {castData.user.name}</Text>
+          <Text variant="bodyMedium">Email: {castData.user.email}</Text>
+          <Text variant="bodyMedium">
+            {new Date(castData.timeStamp).toLocaleString()}
+          </Text>
+          <Button onPress={goToComments} style={{ marginTop: 16 }}>
+            Ver comentários
+          </Button>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -58,6 +66,9 @@ const Post = () => {
 };
 
 const styles = StyleSheet.create({
+  divider: {
+    marginVertical: 16,
+  },
   postImage: {
     width: "100%",
     height: 400,
