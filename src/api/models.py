@@ -48,6 +48,7 @@ class Post(Base):
 	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
 	institutionId = institutionId = Column(Integer, ForeignKey('institutions.id')) # Adiciona relacionamento
 	text = Column(String)
+	title = Column(String)
 	timeStamp = Column(String)
 	imgLink = Column(String)
 

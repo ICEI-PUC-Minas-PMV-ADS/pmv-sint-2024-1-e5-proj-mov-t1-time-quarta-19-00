@@ -89,6 +89,7 @@ class CommentResponse(BaseModel):
 class PostCreate(BaseModel):
 	userId: str
 	text: str
+	title: str
 	institutionId: str
 	timeStamp: str
 	imgLink: str
@@ -97,6 +98,7 @@ class PostCreate(BaseModel):
 class PostUpdate(BaseModel):
 	userId: str
 	text: str
+	title: str
 	institutionId: str
 	timeStamp: str
 	imgLink: str
@@ -106,6 +108,7 @@ class PostResponse(BaseModel):
 	id: int
 	userId: str
 	text: str
+	title: str
 	institutionId: str
 	timeStamp: str
 	imgLink: str
