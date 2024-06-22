@@ -1,15 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Optional
 import jwt
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from database import get_db
+from models import User  # Importe a classe de modelo SQLAlchemy
 
 router = APIRouter()
 
-class User(BaseModel):
+class UserInDB(BaseModel):
     username: str
     password: str
 
@@ -37,9 +38,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 def create_access_token(*, data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(datetime.UTC) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(datetime.UTC) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, "your_secret_key", algorithm="HS256")
     return encoded_jwt
