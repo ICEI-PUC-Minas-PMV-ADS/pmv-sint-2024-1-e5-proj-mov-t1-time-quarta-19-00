@@ -54,6 +54,8 @@ const Login = (props: Props) => {
           userId: data.userId,
           name: data.name,
           email: data.email,
+          isInstitution: data.isInstitution,
+          cnpj: data.cnpj,
         })
       );
 
