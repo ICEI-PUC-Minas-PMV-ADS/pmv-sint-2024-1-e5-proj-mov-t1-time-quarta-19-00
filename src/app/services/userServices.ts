@@ -1,5 +1,6 @@
 import { endpoints } from "@/config/endpoints";
 import { ApiServices } from "./apiServices";
+import { Post } from "./postServices";
 
 export interface User {
   id?: number;
@@ -9,6 +10,10 @@ export interface User {
   password: string;
 }
 
+export interface UserComplete extends User {
+  posts: Post[];
+}
+
 export const userServices = {
   createUser: async (data: User) => {
     return (await ApiServices.create(endpoints.users, data)).data;
@@ -16,7 +21,7 @@ export const userServices = {
   fetchUsers: async (): Promise<User[]> => {
     return (await ApiServices.search(endpoints.users)).data.reverse();
   },
-  getUserById: async (userId: string): Promise<User> => {
+  getUserById: async (userId: string): Promise<UserComplete> => {
     return (await ApiServices.search(`${endpoints.users}/${userId}`)).data;
   },
   authUser: async (
