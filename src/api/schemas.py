@@ -80,10 +80,12 @@ class CommentUpdate(BaseModel):
 
 # Pydantic model for response data
 class CommentResponse(BaseModel):
+	id: int
 	userId: int
 	comment: str
 	postId: int
 	timeStamp: str
+	user: UserResponse
 	
 class PostCreate(BaseModel):
 	userId: int
