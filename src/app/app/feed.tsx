@@ -1,7 +1,5 @@
 // Feed.js
 import usePosts from "@/dataHooks/usePosts";
-import { logout } from "@/store/features/userSlice";
-import { RootState } from "@/store/store";
 import { Link, router } from "expo-router";
 import React from "react";
 import {
@@ -18,9 +16,9 @@ import {
   Card,
   Divider,
   FAB,
+  Icon,
   Text,
 } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
 import { Post } from "@/services";
 import Header from "@/components/Header";
 import useAuth from "@/hooks/useAuth";
@@ -50,6 +48,22 @@ const PostCard = ({ item }: { item?: Post }) => {
         }}
       />
       <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+      <View
+        style={{
+          marginHorizontal: 16,
+          display: "flex",
+          flexDirection: "row",
+          gap: 8,
+
+          alignItems: "center",
+        }}
+      >
+        <Icon color={"#fd7070"} source="heart" size={20} />
+        <Text>{item?.likes?.length}</Text>
+        <Text>|</Text>
+        <Icon color={"#8cbcd3"} source="comment" size={20} />
+        <Text>{item?.comments?.length} </Text>
+      </View>
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
         <TouchableOpacity onPress={() => router.push(`/user/${item?.user.id}`)}>

@@ -4,25 +4,16 @@ Telas Finalizadas (sem conexão com a API ainda):
 * Registro de usuário
 * Feed
 * Visão individual do post
-
-Ainda falta:
 * Cadastro do Post
 * Cadastro de comentário
 * Perfil da Instituição
 * Perfil do usuário
-
-A criar serviços: 
 * Instituições
 * Comentários 
-
-===== Serviços da API 
 * Adicionar o title para o post
-
+* PostLikes
 
 Por último:  ========
 Serviços
 * UserFavorites
-* PostLikes
 
-Adicionar Like ao Post
-Adicionar Favoritos do usuário

@@ -1,6 +1,6 @@
-import { TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { Appbar, Avatar } from "react-native-paper";
+import { Appbar, Avatar, Text } from "react-native-paper";
 import useAuth from "@/hooks/useAuth";
 import { router } from "expo-router";
 
@@ -15,8 +15,33 @@ const Header = ({ title, goBack, hideUser = false }: HeaderProps) => {
   return (
     <Appbar.Header>
       {goBack && <Appbar.BackAction onPress={() => router.replace(goBack)} />}
+      {title === "Feed" ? (
+        <Appbar.Content
+          title={
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{ width: 32, height: 32, borderRadius: 4 }}
+                source={require("../assets/images/logo2.jpeg")}
+              />
+              <Text
+                style={{ marginLeft: 8, fontWeight: "bold" }}
+                variant="bodyLarge"
+              >
+                Hub da Solidariedade
+              </Text>
+            </View>
+          }
+        />
+      ) : (
+        <Appbar.Content title={title} />
+      )}
 
-      <Appbar.Content title={title} />
       {!hideUser &&
         (loggedIn ? (
           <TouchableOpacity onPress={() => router.push("/user")}>

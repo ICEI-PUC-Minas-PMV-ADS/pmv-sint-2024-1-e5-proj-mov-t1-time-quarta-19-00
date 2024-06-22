@@ -121,14 +121,16 @@ const Post = () => {
               </Text>
             </View>
           </View>
-          <Button
-            icon="pencil"
-            mode="contained-tonal"
-            onPress={goToEditPost}
-            style={{ marginTop: 16 }}
-          >
-            Editar post
-          </Button>
+          {castData.userId === userId && (
+            <Button
+              icon="pencil"
+              mode="contained-tonal"
+              onPress={goToEditPost}
+              style={{ marginTop: 16 }}
+            >
+              Editar post
+            </Button>
+          )}
           <Button
             icon="comment"
             mode="contained-tonal"
