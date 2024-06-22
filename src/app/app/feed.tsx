@@ -22,6 +22,7 @@ import {
 } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { Post } from "@/services";
+import Header from "@/components/Header";
 
 export type PostDTO = {
   id: string;
@@ -108,14 +109,6 @@ const postStyles = StyleSheet.create({
 const Feed = () => {
   const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
   const data = cData as Post[];
-  const dispatch = useDispatch();
-
-  const doLogout = () => {
-    dispatch(logout());
-    router.push("/");
-  };
-
-  const { loggedIn } = useSelector((state: RootState) => state.user);
   const doRefetch = () => {
     refetch();
   };
@@ -126,14 +119,7 @@ const Feed = () => {
 
   return (
     <SafeAreaView style={style.wrapper}>
-      <Appbar.Header>
-        <Appbar.Content title="Feed" />
-        {loggedIn ? (
-          <Appbar.Action icon="logout" onPress={doLogout} />
-        ) : (
-          <Appbar.Action icon="login" onPress={() => router.push("/login")} />
-        )}
-      </Appbar.Header>
+      <Header title="Feed" />
       <ScrollView style={style.feed}>
         <View style={style.container}>
           {isLoading && <ActivityIndicator animating={true} />}
