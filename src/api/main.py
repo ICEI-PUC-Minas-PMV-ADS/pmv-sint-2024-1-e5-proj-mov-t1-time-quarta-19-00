@@ -1,12 +1,25 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List  # Import the List type
-from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate
+from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate, UserCompleteResponse
 from models import Item, Institution, User, Comment, Post, PostLikes, UserFavorites
 from database import get_db
+from fastapi.middleware.cors import CORSMiddleware
+from auth import router as auth_router
+import datetime
 
 # FastAPI app instance
 app = FastAPI()
+
+app.include_router(auth_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # API endpoint to create an item
 @app.post("/items/", response_model=ItemResponse)
@@ -119,7 +132,7 @@ async def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_
     return updated_user.first()  # Refresh and return updated user
 
 # API endpoint to read an user by ID
-@app.get("/users/{user_id}", response_model=UserResponse)
+@app.get("/users/{user_id}", response_model=UserCompleteResponse)
 async def read_user(user_id: int, db: Session = Depends(get_db)):
 	db_user = db.query(User).filter(User.id == user_id).first()
 	if db_user is None:
@@ -145,11 +158,12 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
 # API endpoint to create an comment
 @app.post("/comments/", response_model=CommentResponse)
 async def create_comment(comment: CommentCreate, db: Session = Depends(get_db)):
-	db_comment = Comment(**comment.dict())
-	db.add(db_comment)
-	db.commit()
-	db.refresh(db_comment)
-	return db_comment
+    db_comment = Comment(**comment.dict())
+    db_comment.timeStamp = datetime.datetime.now()
+    db.add(db_comment)
+    db.commit()
+    db.refresh(db_comment)
+    return db_comment
 
 # API endpoint to update an comment by ID
 @app.put("/comments/{comment_id}", response_model=CommentResponse)
@@ -189,6 +203,8 @@ async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
 @app.post("/posts/", response_model=PostResponse)
 async def create_post(post: PostCreate, db: Session = Depends(get_db)):
     db_post = Post(**post.dict())
+    db_post.institutionId = 0
+    db_post.timeStamp = datetime.datetime.now()
     db.add(db_post)
     db.commit()
     db.refresh(db_post)

@@ -26,13 +26,10 @@ O projeto visa criar uma plataforma online, que facilite a colaboração entre i
 ### Preparação do ambiente de desenvolvimento
 
 1. Instale o Python:
-
 Se você ainda não tiver o Python instalado, faça o download e instale a versão mais recente do Python no site oficial: python.org.
 
 2. Instale um gerenciador de pacotes (pip):
-
 O pip é o gerenciador de pacotes padrão para o Python. Geralmente, ele é instalado automaticamente com o Python, mas é bom verificar se está instalado e atualizado.
-
 `python -m pip install --upgrade pip`
 
 3. Clone o repositório:
@@ -54,7 +51,7 @@ Instale as dependências do prjeto:
 Execute o comando abaixo para executar o projeto:
 `uvicorn main:app`
 
-# Documentação
+## Documentação
 
 <ol>
 <li><a href="documents/01-Documentação de Contexto.md"> Documentação de Contexto</a></li>
@@ -64,10 +61,10 @@ Execute o comando abaixo para executar o projeto:
 <li><a href="documents/05-Implantação.md"> Implantação</a></li>
 </ol>
 
-# Código
+## Código
 
 <li><a href="src/README.md"> Código Fonte</a></li>
 
-# Apresentação
+## Apresentação
 
 <li><a href="presentation/README.md"> Apresentação da solução</a></li>

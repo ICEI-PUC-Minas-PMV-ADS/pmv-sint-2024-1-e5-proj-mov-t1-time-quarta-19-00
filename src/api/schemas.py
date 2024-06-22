@@ -1,4 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel as PydanticBaseModel
+from typing import List  # Import the List type
+
+class BaseModel(PydanticBaseModel):
+	class Config:
+		orm_mode = True
 
 # Pydantic model for request data
 class ItemCreate(BaseModel):
@@ -19,126 +24,133 @@ class ItemResponse(BaseModel):
 
 # Pydantic model for request data
 class InstitutionCreate(BaseModel):
+	id: int
 	name: str
-	address: str
-	latitude: str
-	longitude: str
-	responsibleUserId: int
-	created: str
-	visitTime: str
-	visitDates: str
+	email: str
+	cnpj: str
+	password: str
 	
 # Pydantic model for request data
 class InstitutionUpdate(BaseModel):
+	id: int
 	name: str
-	address: str
-	latitude: str
-	longitude: str
-	responsibleUserId: int
-	created: str
-	visitTime: str
-	visitDates: str
+	email: str
+	cnpj: str
+	password: str
 
 # Pydantic model for response data
 class InstitutionResponse(BaseModel):
 	id: int
 	name: str
-	address: str
-	latitude: str
-	longitude: str
-	responsibleUserId: int
-	created: str
-	visitTime: str
-	visitDates: str
+	email: str
+	cnpj: str
+	password: str
 	
 class UserCreate(BaseModel):
 	name: str
 	email: str
-	socialUid: str
+	username: str
+	password: str
 	
 # Pydantic model for request data
 class UserUpdate(BaseModel):
 	name: str
 	email: str
-	socialUid: str
+	username: str
+	password: str
 
 # Pydantic model for response data
 class UserResponse(BaseModel):
 	id: int
 	name: str
 	email: str
-	socialUid: str
+	username: str
 	
 class CommentCreate(BaseModel):
-	userId: str
+	userId: int
 	comment: str
-	postId: str
-	timeStamp: str
+	postId: int
 	
 # Pydantic model for request data
 class CommentUpdate(BaseModel):
-	userId: str
+	userId: int
 	comment: str
-	postId: str
+	postId: int
 	timeStamp: str
 
 # Pydantic model for response data
 class CommentResponse(BaseModel):
-	userId: str
+	id: int
+	userId: int
 	comment: str
-	postId: str
+	postId: int
 	timeStamp: str
+	user: UserResponse
 	
 class PostCreate(BaseModel):
-	userId: str
+	userId: int
 	text: str
-	institutionId: str
-	timeStamp: str
+	title: str
+	imgLink: str
 	
 # Pydantic model for request data
 class PostUpdate(BaseModel):
-	userId: str
+	userId: int
 	text: str
-	institutionId: str
+	title: str
+	institutionId: int
 	timeStamp: str
+	imgLink: str
 
 # Pydantic model for response data
 class PostResponse(BaseModel):
 	id: int
-	userId: str
+	userId: int
 	text: str
-	institutionId: str
+	title: str
+	institutionId: int
 	timeStamp: str
+	imgLink: str
+	user: UserResponse
+	comments: List[CommentResponse]
 
 class PostLikesCreate(BaseModel):
-	userId: str
-	postId: str
+	userId: int
+	postId: int
 	timeStamp: str
 	
 # Pydantic model for request data
 class PostLikesUpdate(BaseModel):
-	userId: str
-	postId: str
+	userId: int
+	postId: int
 	timeStamp: str
 
 # Pydantic model for response data
 class PostLikesResponse(BaseModel):
 	id: int
-	userId: str
-	postId: str
+	userId: int
+	postId: int
 	timeStamp: str
 	
 class UserFavoritesCreate(BaseModel):
-	userId: str
-	InstitutionId: str
+	userId: int
+	InstitutionId: int
 	
 # Pydantic model for request data
 class UserFavoritesUpdate(BaseModel):
-	userId: str
-	InstitutionId: str
+	userId: int
+	InstitutionId: int
 
 # Pydantic model for response data
 class UserFavoritesResponse(BaseModel):
 	id: int
-	userId: str		
-	InstitutionId: str
+	userId: int
+	InstitutionId: int
+	
+class UserCompleteResponse(BaseModel):
+	id: int
+	name: str
+	email: str
+	username: str
+	posts: List[PostResponse]
+	comments: List[CommentResponse]

@@ -17,13 +17,9 @@ class Institution(Base):
 	__tablename__ = "institutions"
 	id = Column(Integer, primary_key=True, index=True)
 	name = Column(String, index=True)
-	address = Column(String)
-	latitude = Column(String)
-	longitude = Column(String)
-	responsibleUserId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
-	created = Column(String)
-	visitTime = Column(String)
-	visitDates = Column(String)
+	email = Column(String)
+	cnpj = Column(String)
+	password = Column(String)
 
 
 # Database user model
@@ -31,8 +27,26 @@ class User(Base):
 	__tablename__ = "users"
 	id = Column(Integer, primary_key=True, index=True)
 	name = Column(String, index=True)
+	username = Column(String)
 	email = Column(String)
-	socialUid = Column(String)
+	password = Column(String)
+	posts = relationship("Post", back_populates="user")
+	comments = relationship("Comment", back_populates="user")
+
+	
+# Database posts model
+class Post(Base):
+	__tablename__ = "posts"
+	id = Column(Integer, primary_key=True, index=True)
+	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
+	institutionId = institutionId = Column(Integer, ForeignKey('institutions.id')) # Adiciona relacionamento
+	text = Column(String)
+	title = Column(String)
+	timeStamp = Column(String)
+	imgLink = Column(String)
+
+	user = relationship("User", back_populates="posts")
+	comments = relationship("Comment", back_populates="post")
 
 
 # Database comment  model
@@ -43,16 +57,9 @@ class Comment(Base):
 	comment = Column(String)
 	postId = Column(Integer, ForeignKey('posts.id')) # Adiciona relacionamento
 	timeStamp = Column(String)
-	
-# Database posts model
-class Post(Base):
-	__tablename__ = "posts"
-	id = Column(Integer, primary_key=True, index=True)
-	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
-	institutionId = institutionId = Column(Integer, ForeignKey('institutions.id')) # Adiciona relacionamento
-	text = Column(String)
-	timeStamp = Column(String)
 
+	user = relationship(User, back_populates="comments")
+	post = relationship(Post, back_populates="comments")
 
 # Database PostLikes model
 class PostLikes(Base):
@@ -69,5 +76,3 @@ class UserFavorites(Base):
 	id = Column(Integer, primary_key=True, index=True)
 	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
 	institutionId = institutionId = Column(Integer, ForeignKey('institutions.id')) # Adiciona relacionamento
-
-
