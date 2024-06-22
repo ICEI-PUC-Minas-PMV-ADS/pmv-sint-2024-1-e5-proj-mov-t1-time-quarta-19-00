@@ -1,21 +1,20 @@
 // Feed.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, StyleSheet } from "react-native";
 
 type PostsProps = {
-  id: string;
-  userName: string;
-  userAvatar: string;
-  postImage: string;
-  caption: string;
-  likes: number;
-  comments: number;
+  id: number;
+  userId: string;
+  text: string;
+  institutionId: string;
+  timeStamp: string;
+  imgLink: string;
 };
 
 export const posts = [
   {
     id: "1",
-    userName: "user1",
+    userName: "nome do usuário",
     userAvatar: "https://via.placeholder.com/150",
     postImage: "https://via.placeholder.com/500",
     caption: "This is a beautiful scenery!",
@@ -35,16 +34,45 @@ export const posts = [
 ];
 
 const Feed = () => {
+  const [postsItem, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(
+          "https://find-ong-api.onrender.com/posts/",
+          {
+            method: "GET",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  console.log(postsItem);
   const renderItem = ({ item }: any) => (
     <View style={styles.postContainer}>
       <View style={styles.header}>
         <Image source={{ uri: item.userAvatar }} style={styles.avatar} />
         <Text style={styles.userName}>{item.userName}</Text>
       </View>
-      <Image source={{ uri: item.postImage }} style={styles.postImage} />
+      <View style={styles.boxImage}>
+        <Image source={{ uri: item.postImage }} style={styles.postImage} />
+        <Text style={styles.postDescription}>{item?.caption}</Text>
+      </View>
       <View style={styles.footer}>
-        <Text style={styles.likes}>{item.likes} likes</Text>
-        <Text style={styles.caption}>{item.caption}</Text>
         <Text style={styles.comments}>View all {item.comments} comments</Text>
       </View>
     </View>
@@ -54,7 +82,8 @@ const Feed = () => {
     <FlatList
       data={posts}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      // @ts-ignore
+      keyExtractor={(item) => item?.id || ""}
       style={styles.feed}
     />
   );
@@ -64,6 +93,11 @@ const styles = StyleSheet.create({
   feed: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  postDescription: {
+    color: "black",
+    marginLeft: 15,
+    marginTop: 15,
   },
   postContainer: {
     marginBottom: 20,
@@ -82,9 +116,17 @@ const styles = StyleSheet.create({
   userName: {
     fontWeight: "bold",
   },
+  boxImage: {
+    margin: 10,
+    borderRadius: 30,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 2,
+    backgroundColor: "#dddddd",
+  },
   postImage: {
     width: "100%",
-    height: 400,
+    height: 300,
   },
   footer: {
     padding: 10,
