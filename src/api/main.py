@@ -6,7 +6,7 @@ from models import Item, Institution, User, Comment, Post, PostLikes, UserFavori
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
-
+import datetime
 
 # FastAPI app instance
 app = FastAPI()
@@ -202,6 +202,8 @@ async def delete_comment(comment_id: int, db: Session = Depends(get_db)):
 @app.post("/posts/", response_model=PostResponse)
 async def create_post(post: PostCreate, db: Session = Depends(get_db)):
     db_post = Post(**post.dict())
+    db_post.institutionId = 0
+    db_post.timeStamp = datetime.datetime.now()
     db.add(db_post)
     db.commit()
     db.refresh(db_post)

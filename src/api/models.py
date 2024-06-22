@@ -30,7 +30,7 @@ class User(Base):
 	username = Column(String)
 	email = Column(String)
 	password = Column(String)
-
+	posts = relationship("Post", back_populates="user")
 
 # Database comment  model
 class Comment(Base):
@@ -51,6 +51,7 @@ class Post(Base):
 	title = Column(String)
 	timeStamp = Column(String)
 	imgLink = Column(String)
+	user = relationship("User", back_populates="posts")
 
 
 # Database PostLikes model
