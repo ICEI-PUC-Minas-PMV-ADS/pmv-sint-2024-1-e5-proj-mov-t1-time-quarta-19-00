@@ -64,6 +64,7 @@ class UserResponse(BaseModel):
 	name: str
 	email: str
 	password: str
+	username: str
 	
 class CommentCreate(BaseModel):
 	userId: str
