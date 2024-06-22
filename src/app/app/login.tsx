@@ -51,6 +51,9 @@ const Login = (props: Props) => {
         login({
           access_token: data.access_token,
           username: userData.username,
+          userId: data.userId,
+          name: data.name,
+          email: data.email,
         })
       );
 
