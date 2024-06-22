@@ -7,3 +7,10 @@ export const useCommentCreateMutation = () => {
     mutationKey: ["comments"],
   });
 };
+
+export const useCommentDeleteMutation = () => {
+  return useMutation({
+    mutationFn: commentServices.deleteComment,
+    mutationKey: ["comments"],
+  });
+};

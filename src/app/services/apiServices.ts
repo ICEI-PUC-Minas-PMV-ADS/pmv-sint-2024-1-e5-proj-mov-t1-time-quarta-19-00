@@ -15,7 +15,7 @@ export const ApiServices = {
   update: async (endpoint: string, data: any) => {
     return axios.put(addApiUrl(endpoint), data);
   },
-  delete: async (endpoint: string, data: any) => {
+  delete: async (endpoint: string, data?: any) => {
     return axios.delete(addApiUrl(endpoint));
   },
 };
