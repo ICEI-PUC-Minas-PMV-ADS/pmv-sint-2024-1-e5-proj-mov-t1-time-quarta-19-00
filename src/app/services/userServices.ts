@@ -24,11 +24,26 @@ export const userServices = {
   ): Promise<{
     access_token: string;
     token_type: string;
+    email: string;
+    username: string;
+    name: string;
+    userId: number;
   }> => {
     const form_data = new FormData();
     form_data.append("username", user.username);
     form_data.append("password", user.password);
 
-    return (await ApiServices.create(endpoints.auth, form_data)).data;
+    const response = (await ApiServices.create(endpoints.auth, form_data)).data;
+
+    const tokenDecoded = JSON.parse(atob(response.access_token.split(".")[1]));
+
+    return {
+      access_token: response.access_token,
+      token_type: tokenDecoded.token_type,
+      email: tokenDecoded.email,
+      username: tokenDecoded.username,
+      name: tokenDecoded.name,
+      userId: tokenDecoded.userId,
+    };
   },
 };
