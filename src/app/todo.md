@@ -23,3 +23,6 @@ Por último:  ========
 Serviços
 * UserFavorites
 * PostLikes
+
+Adicionar Like ao Post
+Adicionar Favoritos do usuário

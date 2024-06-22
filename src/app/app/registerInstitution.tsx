@@ -34,6 +34,7 @@ const RegisterInstitution = (props: Props) => {
   return (
     <View>
       <Appbar.Header>
+        <Appbar.BackAction onPress={doLogin} />
         <Appbar.Content title="Cadastrar-se como instituição" />
       </Appbar.Header>
       <View style={style.container}>

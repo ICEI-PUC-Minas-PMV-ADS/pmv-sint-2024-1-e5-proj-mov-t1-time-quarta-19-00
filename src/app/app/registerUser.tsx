@@ -33,6 +33,7 @@ const RegisterUser = (props: Props) => {
   return (
     <View>
       <Appbar.Header>
+        <Appbar.BackAction onPress={doLogin} />
         <Appbar.Content title="Cadastrar-se" />
       </Appbar.Header>
       <View style={style.container}>

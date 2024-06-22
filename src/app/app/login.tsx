@@ -25,10 +25,14 @@ const Login = (props: Props) => {
     router.replace("/registerUser");
   };
 
+  const goToFeed = () => {
+    router.replace("/feed");
+  };
+
   return (
     <View>
       <Appbar.Header>
-        {/* <Appbar.BackAction /> */}
+        <Appbar.BackAction onPress={goToFeed} />
         <Appbar.Content title="Entrar" />
       </Appbar.Header>
       <View style={style.container}>
