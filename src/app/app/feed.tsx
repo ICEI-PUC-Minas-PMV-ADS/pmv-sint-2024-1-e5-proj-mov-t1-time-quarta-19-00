@@ -16,6 +16,7 @@ import {
   Appbar,
   Button,
   Card,
+  Divider,
   FAB,
   Text,
 } from "react-native-paper";
@@ -47,17 +48,62 @@ const PostCard = ({ item }: { item?: Post }) => {
         }}
       />
       <Card.Title title={item?.text} subtitle={item?.text.slice(0, 20)} />
-      <Card.Actions>
-        <Button mode="text" onPress={goToComments}>
-          Ver comentários
-        </Button>
-        <Button mode="contained" onPress={goToPost}>
-          Ver tudo
-        </Button>
-      </Card.Actions>
+      <Divider style={postStyles.divider} />
+      <Card.Content style={postStyles.containerUser}>
+        <View style={postStyles.containerImage}>
+          <Image
+            source={{
+              uri: `https://robohash.org/${item?.user.name}?set=set3`,
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 50,
+              backgroundColor: "#ddd",
+            }}
+          />
+          <View>
+            <Text>{item?.user.name}</Text>
+            <Text>{item?.user.email}</Text>
+          </View>
+        </View>
+        <View style={postStyles.containerButtons}>
+          <Button icon="comment" mode="text" onPress={goToComments}>
+            Comentários
+          </Button>
+          <Button icon="eye" mode="contained" onPress={goToPost}>
+            Ler tudo
+          </Button>
+        </View>
+      </Card.Content>
     </Card>
   );
 };
+
+const postStyles = StyleSheet.create({
+  containerButtons: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 8,
+  },
+  containerImage: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  containerUser: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
+    marginTop: 8,
+  },
+  divider: {
+    margin: 8,
+  },
+});
 
 const Feed = () => {
   const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
