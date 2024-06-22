@@ -32,6 +32,7 @@ class User(Base):
 	password = Column(String)
 	posts = relationship("Post", back_populates="user")
 	comments = relationship("Comment", back_populates="user")
+	likes = relationship("PostLikes", back_populates="user")
 
 	isInstitution = Column(Boolean, default=False)
 	cnpj = Column(String, default="")
@@ -49,6 +50,7 @@ class Post(Base):
 
 	user = relationship("User", back_populates="posts")
 	comments = relationship("Comment", back_populates="post")
+	likes = relationship("PostLikes", back_populates="post")
 
 
 # Database comment  model
@@ -70,6 +72,9 @@ class PostLikes(Base):
 	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
 	postId = postId = Column(Integer, ForeignKey('posts.id')) # Adiciona relacionamento
 	timeStamp = Column(String)
+	
+	post = relationship(Post, back_populates="likes")
+	user = relationship(User, back_populates="likes")
 
 
 # Database UserFavorites model

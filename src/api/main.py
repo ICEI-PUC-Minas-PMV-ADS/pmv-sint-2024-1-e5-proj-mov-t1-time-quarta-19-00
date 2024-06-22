@@ -114,7 +114,8 @@ async def delete_Institution(Institution_id: int, db: Session = Depends(get_db))
 # API endpoint to create an user
 @app.post("/users/", response_model=UserResponse)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    db_user = User(**user.dict())
+    db_user = User(**user.dict()) 
+    print(db_user.isInstitution)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -253,11 +254,12 @@ async def delete_post(post_id: int, db: Session = Depends(get_db)):
 # API endpoint to create an postLike
 @app.post("/postLikes/", response_model=PostLikesResponse)
 async def create_postLike(postLike: PostLikesCreate, db: Session = Depends(get_db)):
-	db_postLike = PostLikes(**postLike.dict())
-	db.add(db_postLike)
-	db.commit()
-	db.refresh(db_postLike)
-	return db_postLike
+    db_postLike = PostLikes(**postLike.dict())
+    db_postLike.timeStamp = datetime.datetime.now()
+    db.add(db_postLike)
+    db.commit()
+    db.refresh(db_postLike)
+    return db_postLike
 
 # API endpoint to update an postLike by ID
 @app.put("/postLikes/{postLike_id}", response_model=PostLikesResponse)

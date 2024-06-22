@@ -50,7 +50,9 @@ class UserCreate(BaseModel):
 	name: str
 	email: str
 	username: str
-	password: str
+	password: str 
+	isInstitution: bool = False
+	cnpj: str  = ""
 	
 # Pydantic model for request data
 class UserUpdate(BaseModel):
@@ -105,6 +107,22 @@ class PostUpdate(BaseModel):
 	timeStamp: str
 	imgLink: str
 
+class PostLikesCreate(BaseModel):
+	userId: int
+	postId: int
+	
+# Pydantic model for request data
+class PostLikesUpdate(BaseModel):
+	userId: int
+	postId: int
+
+# Pydantic model for response data
+class PostLikesResponse(BaseModel):
+	id: int
+	userId: int
+	postId: int
+	timeStamp: str
+
 # Pydantic model for response data
 class PostResponse(BaseModel):
 	id: int
@@ -116,24 +134,7 @@ class PostResponse(BaseModel):
 	imgLink: str
 	user: UserResponse
 	comments: List[CommentResponse]
-
-class PostLikesCreate(BaseModel):
-	userId: int
-	postId: int
-	timeStamp: str
-	
-# Pydantic model for request data
-class PostLikesUpdate(BaseModel):
-	userId: int
-	postId: int
-	timeStamp: str
-
-# Pydantic model for response data
-class PostLikesResponse(BaseModel):
-	id: int
-	userId: int
-	postId: int
-	timeStamp: str
+	likes: List[PostLikesResponse]
 	
 class UserFavoritesCreate(BaseModel):
 	userId: int
@@ -158,4 +159,6 @@ class UserCompleteResponse(BaseModel):
 	isInstitution: bool
 	cnpj: str
 	posts: List[PostResponse]
+	posts: List[PostResponse]
 	comments: List[CommentResponse]
+	likes: List[PostLikesResponse]
