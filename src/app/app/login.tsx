@@ -1,24 +1,63 @@
 import { View, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Appbar, Text, Button, TextInput } from "react-native-paper";
 import { router } from "expo-router";
+import ErrorMessage from "@/components/ErrorMessage";
+import { userAuthMutation } from "@/dataHooks/useUsers";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "@/store/features/userSlice";
+import { RootState } from "@/store/store";
 
 type Props = {};
 
 interface UserLoginData {
-  email: string;
-  senha: string;
+  username: string;
+  password: string;
 }
 
 const Login = (props: Props) => {
   const [userData, setUserData] = React.useState({} as UserLoginData);
+  const dispatch = useDispatch();
+
+  const { loggedIn } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (loggedIn) {
+      router.replace("/");
+    }
+  }, [loggedIn]);
 
   const updateUserData = (key: keyof UserLoginData, value: string) => {
     setUserData({ ...userData, [key]: value });
   };
 
-  const doLogin = () => {
-    console.log("Do Login");
+  const [error, setError] = React.useState("");
+  const { mutateAsync } = userAuthMutation();
+
+  const doLogin = async () => {
+    try {
+      if (
+        userData?.username === "" ||
+        userData?.password === "" ||
+        Object.keys(userData).length === 0
+      ) {
+        setError("Preencha todos os dados");
+        return;
+      }
+
+      const data = await mutateAsync(userData);
+
+      dispatch(
+        login({
+          access_token: data.access_token,
+          username: userData.username,
+        })
+      );
+
+      router.replace("/");
+    } catch (err) {
+      setError("Erro ao logar");
+    }
   };
 
   const doRegister = () => {
@@ -37,17 +76,18 @@ const Login = (props: Props) => {
       </Appbar.Header>
       <View style={style.container}>
         <View style={style.containerForm}>
+          <ErrorMessage error={error} />
           <Text variant="titleMedium">Preencha seus dados para entrar</Text>
           <TextInput
-            label="Email"
-            value={userData.email}
-            onChangeText={(text) => updateUserData("email", text)}
+            label="Username"
+            value={userData.username}
+            onChangeText={(text) => updateUserData("username", text)}
           />
           <TextInput
             label="Senha"
             secureTextEntry
-            value={userData.senha}
-            onChangeText={(text) => updateUserData("senha", text)}
+            value={userData.password}
+            onChangeText={(text) => updateUserData("password", text)}
           />
           <Button
             style={style.buttonSubmit}
