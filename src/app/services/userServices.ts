@@ -19,4 +19,12 @@ export const userServices = {
   getUserById: async (userId: string): Promise<User> => {
     return (await ApiServices.search(`${endpoints.users}/${userId}`)).data;
   },
+  authUser: async (
+    user: Pick<User, "username" | "password">
+  ): Promise<{
+    access_token: string;
+    token_type: string;
+  }> => {
+    return (await ApiServices.create(endpoints.auth, user)).data;
+  },
 };
