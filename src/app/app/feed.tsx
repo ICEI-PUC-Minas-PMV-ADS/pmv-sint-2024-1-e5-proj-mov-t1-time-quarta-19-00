@@ -56,7 +56,7 @@ const PostCard = ({ item }: { item?: Post }) => {
           <View style={postStyles.containerImage}>
             <Image
               source={{
-                uri: `https://robohash.org/${item?.user.name}?set=set3`,
+                uri: `https://robohash.org/${item?.user.username}?set=set3`,
               }}
               style={{
                 width: 40,
