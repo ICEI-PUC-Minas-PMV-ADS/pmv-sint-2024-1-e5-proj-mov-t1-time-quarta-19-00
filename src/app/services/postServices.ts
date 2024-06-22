@@ -1,6 +1,7 @@
 import { endpoints } from "@/config/endpoints";
 import { ApiServices } from "./apiServices";
 import { User } from "./userServices";
+import { Comment } from "./commentServices";
 
 export interface Post {
   id?: number;
@@ -10,6 +11,7 @@ export interface Post {
   userId: number;
   timeStamp: string;
   user: User;
+  comments: Comment[];
 }
 
 export const postServices = {
