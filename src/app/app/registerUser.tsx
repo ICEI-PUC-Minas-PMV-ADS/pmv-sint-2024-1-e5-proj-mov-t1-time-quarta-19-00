@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { Appbar, Button, Text, TextInput } from "react-native-paper";
+import { Appbar, Button, Text, TextInput, useTheme } from "react-native-paper";
 import { router } from "expo-router";
 import { createUserMutation } from "@/dataHooks/useUsers";
 import { User } from "@/services";
@@ -11,6 +11,7 @@ type Props = {};
 type UserRegisterData = User;
 
 const RegisterUser = (props: Props) => {
+  const theme = useTheme();
   const [userData, setUserData] = useState({} as UserRegisterData);
   const [error, setError] = useState("");
   const [isInstitution, setIsInstitution] = useState(false);
@@ -80,7 +81,12 @@ const RegisterUser = (props: Props) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        backgroundColor: theme.colors.surface,
+        flex: 1,
+      }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={doLogin} />
         <Appbar.Content title="Cadastrar-se" />

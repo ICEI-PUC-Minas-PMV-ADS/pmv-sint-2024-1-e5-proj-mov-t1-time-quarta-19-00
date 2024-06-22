@@ -1,13 +1,14 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
 import Header from "@/components/Header";
-import { Avatar, Button, Text } from "react-native-paper";
+import { Avatar, Button, Text, useTheme } from "react-native-paper";
 import useAuth from "@/hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/features/userSlice";
 import { router } from "expo-router";
 
 const User = () => {
+  const theme = useTheme();
   const { username, ...user } = useAuth();
 
   const dispatch = useDispatch();
@@ -18,7 +19,9 @@ const User = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.surface }}
+    >
       <Header goBack="/feed" hideUser title="Usuário" />
       <View style={styles.wrapper}>
         <View style={styles.containerUser}>

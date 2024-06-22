@@ -26,8 +26,8 @@ const Header = ({ title, goBack, hideUser = false }: HeaderProps) => {
               }}
             >
               <Image
-                style={{ width: 32, height: 32, borderRadius: 4 }}
-                source={require("../assets/images/logo2.jpeg")}
+                style={{ width: 36, height: 36, borderRadius: 50 }}
+                source={require("../assets/images/icon.png")}
               />
               <Text
                 style={{ marginLeft: 8, fontWeight: "bold" }}

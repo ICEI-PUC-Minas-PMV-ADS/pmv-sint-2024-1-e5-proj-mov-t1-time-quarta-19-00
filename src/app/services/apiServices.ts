@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const addApiUrl = (endpoint: string) => {
-  return `http://localhost:3380${endpoint}`;
-  // return `https://find-ong-api.onrender.com${endpoint}`;
+export const addApiUrl = (endpoint: string) => {
+  // return `http://localhost:3380${endpoint}`;
+  return `https://find-ong-api.onrender.com${endpoint}`;
 };
 
 export const ApiServices = {

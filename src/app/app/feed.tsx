@@ -18,6 +18,7 @@ import {
   FAB,
   Icon,
   Text,
+  useTheme,
 } from "react-native-paper";
 import { Post } from "@/services";
 import Header from "@/components/Header";
@@ -40,34 +41,21 @@ const PostCard = ({ item }: { item?: Post }) => {
 
   return (
     <Card>
-      <Card.Cover
-        source={{
-          uri: item?.imgLink.includes("http")
-            ? item?.imgLink
-            : "https://picsum.photos/700",
-        }}
-      />
-      <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
       <View
         style={{
-          marginHorizontal: 16,
           display: "flex",
           flexDirection: "row",
-          gap: 8,
-
+          justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        <Icon color={"#fd7070"} source="heart" size={20} />
-        <Text>{item?.likes?.length}</Text>
-        <Text>|</Text>
-        <Icon color={"#8cbcd3"} source="comment" size={20} />
-        <Text>{item?.comments?.length} </Text>
-      </View>
-      <Divider style={postStyles.divider} />
-      <Card.Content style={postStyles.containerUser}>
         <TouchableOpacity onPress={() => router.push(`/user/${item?.user.id}`)}>
-          <View style={postStyles.containerImage}>
+          <View
+            style={{
+              ...postStyles.containerImage,
+              padding: 14,
+            }}
+          >
             <Image
               source={{
                 uri: `https://robohash.org/${item?.user.username}?set=set3`,
@@ -85,6 +73,33 @@ const PostCard = ({ item }: { item?: Post }) => {
             </View>
           </View>
         </TouchableOpacity>
+        <View
+          style={{
+            marginHorizontal: 16,
+            display: "flex",
+            flexDirection: "row",
+            gap: 8,
+
+            alignItems: "center",
+          }}
+        >
+          <Icon color={"#fd7070"} source="heart" size={20} />
+          <Text>{item?.likes?.length}</Text>
+          <Text>|</Text>
+          <Icon color={"#8cbcd3"} source="comment" size={20} />
+          <Text>{item?.comments?.length} </Text>
+        </View>
+      </View>
+      <Card.Cover
+        source={{
+          uri: item?.imgLink.includes("http")
+            ? item?.imgLink
+            : "https://picsum.photos/700",
+        }}
+      />
+      <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+      <Divider style={postStyles.divider} />
+      <Card.Content style={postStyles.containerUser}>
         <View style={postStyles.containerButtons}>
           <Button icon="comment" mode="text" onPress={goToComments}>
             Comentários
@@ -102,6 +117,7 @@ const postStyles = StyleSheet.create({
   containerButtons: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-between",
     gap: 8,
   },
   containerImage: {
@@ -112,9 +128,7 @@ const postStyles = StyleSheet.create({
   },
   containerUser: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: "column",
     gap: 8,
     marginTop: 8,
   },
@@ -124,6 +138,8 @@ const postStyles = StyleSheet.create({
 });
 
 const Feed = () => {
+  const theme = useTheme();
+
   const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
   const data = cData as Post[];
 
@@ -137,9 +153,13 @@ const Feed = () => {
   };
 
   return (
-    <SafeAreaView style={style.wrapper}>
+    <SafeAreaView
+      style={{ ...style.wrapper, backgroundColor: theme.colors.surface }}
+    >
       <Header title="Feed" />
-      <ScrollView style={style.feed}>
+      <ScrollView
+        style={{ ...style.feed, backgroundColor: theme.colors.surface }}
+      >
         <View style={style.container}>
           {isLoading && <ActivityIndicator animating={true} />}
           {isError && (
@@ -147,7 +167,7 @@ const Feed = () => {
               <Text>Houve um erro ao buscar os dados {error.message}</Text>
             </>
           )}
-          {data?.length === 0 && (
+          {!isLoading && data?.length === 0 && (
             <View style={style.emptyContainer}>
               <Image
                 style={style.emptyImage}

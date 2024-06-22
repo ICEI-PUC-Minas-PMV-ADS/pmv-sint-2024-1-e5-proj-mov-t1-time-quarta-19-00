@@ -18,6 +18,7 @@ import {
   FAB,
   Portal,
   Text,
+  useTheme,
 } from "react-native-paper";
 import { Post, UserComplete } from "@/services";
 import Header from "@/components/Header";
@@ -105,6 +106,7 @@ const postStyles = StyleSheet.create({
 });
 
 const UserPosts = () => {
+  const theme = useTheme();
   const { slug: userId, ...params } = useLocalSearchParams();
   const isSettingsActive = params?.settings === "true";
   const {
@@ -145,7 +147,9 @@ const UserPosts = () => {
   };
 
   return (
-    <SafeAreaView style={style.wrapper}>
+    <SafeAreaView
+      style={{ ...style.wrapper, backgroundColor: theme.colors.surface }}
+    >
       <Header goBack="/feed" title={`Perfil de ${userData?.name}`} />
       <Portal>
         <Dialog visible={Boolean(postDeleteId)} onDismiss={cleanPostDeleteId}>
@@ -158,7 +162,9 @@ const UserPosts = () => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-      <ScrollView style={style.feed}>
+      <ScrollView
+        style={{ ...style.feed, backgroundColor: theme.colors.surface }}
+      >
         <View style={style.container}>
           <View style={style.containerUserData}>
             <Avatar.Image

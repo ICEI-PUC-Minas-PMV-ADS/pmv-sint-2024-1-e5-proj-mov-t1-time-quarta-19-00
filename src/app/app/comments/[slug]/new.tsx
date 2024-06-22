@@ -6,11 +6,12 @@ import { Post } from "@/services";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar, Button, Text, TextInput } from "react-native-paper";
+import { Appbar, Button, Text, TextInput, useTheme } from "react-native-paper";
 
 type Props = {};
 
 export const New = (props: Props) => {
+  const theme = useTheme();
   const { userId } = useAuth();
   const { slug } = useLocalSearchParams();
   const { data } = usePosts(+(slug || 0) || null);
@@ -39,7 +40,12 @@ export const New = (props: Props) => {
   };
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme.colors.surface,
+      }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={goToPostComments} />
         <Appbar.Content title={`Novo comentário em ${post?.title ?? ""}`} />

@@ -8,6 +8,7 @@ import {
   IconButton,
   Dialog,
   Portal,
+  useTheme,
 } from "react-native-paper";
 import { router, useLocalSearchParams } from "expo-router";
 import usePosts from "@/dataHooks/usePosts";
@@ -18,6 +19,7 @@ import useAuth from "@/hooks/useAuth";
 type Props = {};
 
 const PostComments = (props: Props) => {
+  const theme = useTheme();
   const { slug } = useLocalSearchParams();
   const { data } = usePosts(+(slug || 0) || null);
   const post = data as Post;
@@ -57,7 +59,12 @@ const PostComments = (props: Props) => {
 
   return (
     <>
-      <SafeAreaView style={styles.containerScrollArea}>
+      <SafeAreaView
+        style={{
+          ...styles.containerScrollArea,
+          backgroundColor: theme.colors.surface,
+        }}
+      >
         <Appbar.Header>
           <Appbar.BackAction onPress={goToPosts} />
           <Appbar.Content title={`Comentários do post ${post?.title ?? ""}`} />

@@ -4,13 +4,13 @@ import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import usePosts from "@/dataHooks/usePosts";
 import { router, useLocalSearchParams } from "expo-router";
-import { Appbar, Button, Divider, Text } from "react-native-paper";
+import { Appbar, Button, Divider, Text, useTheme } from "react-native-paper";
 import { Post as IPost } from "@/services";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   usePostLikeCreateMutation,
   usePostLikeDeleteMutation,
@@ -18,6 +18,8 @@ import {
 import useAuth from "@/hooks/useAuth";
 
 const Post = () => {
+  const theme = useTheme();
+
   const { slug } = useLocalSearchParams();
   const { data, isLoading, refetch } = usePosts(+(slug || 0) || null);
   const castData = data as IPost;
@@ -69,10 +71,15 @@ const Post = () => {
   };
 
   return (
-    <SafeAreaView style={styles.containerScrollArea}>
+    <SafeAreaView
+      style={{
+        ...styles.containerScrollArea,
+        backgroundColor: theme.colors.surface,
+      }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={goToPosts} />
-        <Appbar.Content title={`Post ${castData?.id ?? ""}`} />
+        <Appbar.Content title={`Post ${castData?.title ?? ""}`} />
       </Appbar.Header>
       <ScrollView>
         <Image
@@ -101,7 +108,7 @@ const Post = () => {
                       width: 40,
                       height: 40,
                       borderRadius: 50,
-                      backgroundColor: "#ddd",
+                      backgroundColor: theme.colors.surface,
                     }}
                   />
                   <View>
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
   },
   containerScrollArea: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
   },
   containerUser: {
     display: "flex",

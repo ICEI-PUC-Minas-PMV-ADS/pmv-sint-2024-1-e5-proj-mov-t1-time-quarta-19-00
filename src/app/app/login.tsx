@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
-import { Appbar, Text, Button, TextInput } from "react-native-paper";
+import { Appbar, Text, Button, TextInput, useTheme } from "react-native-paper";
 import { router } from "expo-router";
 import ErrorMessage from "@/components/ErrorMessage";
 import { userAuthMutation } from "@/dataHooks/useUsers";
@@ -16,6 +16,7 @@ interface UserLoginData {
 }
 
 const Login = (props: Props) => {
+  const theme = useTheme();
   const [userData, setUserData] = React.useState({} as UserLoginData);
   const dispatch = useDispatch();
 
@@ -36,6 +37,8 @@ const Login = (props: Props) => {
 
   const doLogin = async () => {
     try {
+      console.log("There");
+      console.log(userData);
       if (
         userData?.username === "" ||
         userData?.password === "" ||
@@ -45,22 +48,25 @@ const Login = (props: Props) => {
         return;
       }
 
-      const data = await mutateAsync(userData);
+      console.log("There");
 
+      const data = await mutateAsync(userData);
+      console.log(data);
       dispatch(
         login({
-          access_token: data.access_token,
-          username: userData.username,
-          userId: data.userId,
-          name: data.name,
-          email: data.email,
-          isInstitution: data.isInstitution,
-          cnpj: data.cnpj,
+          access_token: data?.access_token,
+          username: userData?.username,
+          userId: data?.userId,
+          name: data?.name,
+          email: data?.email,
+          isInstitution: data?.isInstitution,
+          cnpj: data?.cnpj,
         })
       );
 
       router.replace("/");
     } catch (err) {
+      console.log("err", err);
       setError("Erro ao logar");
     }
   };
@@ -74,7 +80,9 @@ const Login = (props: Props) => {
   };
 
   return (
-    <View style={style.loginContainer}>
+    <View
+      style={{ ...style.loginContainer, backgroundColor: theme.colors.surface }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={goToFeed} />
         <Appbar.Content title="Entrar" />

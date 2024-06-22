@@ -1,7 +1,8 @@
 import { endpoints } from "@/config/endpoints";
-import { ApiServices } from "./apiServices";
+import { addApiUrl, ApiServices } from "./apiServices";
 import { Post } from "./postServices";
-
+import axios, { AxiosRequestConfig } from "axios";
+import { jwtDecode } from "jwt-decode";
 export interface User {
   id?: number;
   name: string;
@@ -14,6 +15,17 @@ export interface User {
 
 export interface UserComplete extends User {
   posts: Post[];
+}
+
+interface jsonStructure {
+  access_token: string;
+  token_type: string;
+  email: string;
+  username: string;
+  name: string;
+  userId: number;
+  isInstitution: boolean;
+  cnpj: string;
 }
 
 export const userServices = {
@@ -42,9 +54,25 @@ export const userServices = {
     form_data.append("username", user.username);
     form_data.append("password", user.password);
 
-    const response = (await ApiServices.create(endpoints.auth, form_data)).data;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url: addApiUrl(endpoints.auth),
+      responseType: "json",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      transformRequest: (data, headers) => {
+        return form_data;
+      },
+      onUploadProgress: (progressEvent) => {},
+      data: form_data,
+    };
 
-    const tokenDecoded = JSON.parse(atob(response.access_token.split(".")[1]));
+    // endpoints.auth;
+    const response = (await axios.request(config)).data;
+    console.log({ response });
+    const tokenDecoded = jwtDecode(response.access_token) as jsonStructure;
+    console.log("🚀 ~ tokenDecoded:", tokenDecoded);
 
     return {
       access_token: response.access_token,

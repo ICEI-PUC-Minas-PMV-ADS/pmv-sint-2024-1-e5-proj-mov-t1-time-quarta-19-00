@@ -39,7 +39,7 @@ export default function RootLayout() {
 
   return (
     <PaperProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={DefaultTheme}>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
             <Stack screenOptions={{ headerShown: false }}>
