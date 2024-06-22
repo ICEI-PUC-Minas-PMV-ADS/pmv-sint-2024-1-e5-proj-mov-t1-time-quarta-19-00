@@ -1,15 +1,7 @@
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
-import { Redirect } from "expo-router";
+import Feed from "./feed";
 
 const SwitchFeedAndLogin = () => {
-  const { loggedIn } = useSelector((state: RootState) => state.user);
-
-  if (loggedIn) {
-    return <Redirect href="/feed" />;
-  }
-
-  return <Redirect href="/login" />;
+  return <Feed />;
 };
 
 export default SwitchFeedAndLogin;

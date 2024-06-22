@@ -1,9 +1,16 @@
 // Feed.js
 import usePosts from "@/dataHooks/usePosts";
 import { logout } from "@/store/features/userSlice";
+import { RootState } from "@/store/store";
 import { Link, router } from "expo-router";
 import React from "react";
-import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import {
   ActivityIndicator,
   Appbar,
@@ -11,7 +18,7 @@ import {
   Card,
   Text,
 } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export type PostDTO = {
   id: string;
@@ -51,30 +58,55 @@ const PostCard = ({ item }: { item?: PostDTO }) => {
 };
 
 const Feed = () => {
-  const { data = [], isLoading, isError, error } = usePosts();
+  const { data = [], isLoading, isError, error, refetch } = usePosts();
   const dispatch = useDispatch();
 
   const doLogout = () => {
     dispatch(logout());
     router.push("/");
   };
+
+  const { loggedIn } = useSelector((state: RootState) => state.user);
+  const doRefetch = () => {
+    refetch();
+  };
+
   return (
     <SafeAreaView style={style.wrapper}>
       <Appbar.Header>
         {/* <Appbar.BackAction /> */}
         <Appbar.Content title="Feed" />
-        <Appbar.Action icon="logout" onPress={doLogout} />
+        {loggedIn ? (
+          <Appbar.Action icon="logout" onPress={doLogout} />
+        ) : (
+          <Appbar.Action icon="login" onPress={() => router.push("/login")} />
+        )}
       </Appbar.Header>
       <ScrollView style={style.feed}>
         <View style={style.container}>
           {isLoading && <ActivityIndicator animating={true} />}
           {isError && (
-            <Text>Houve um erro ao buscar os dados {error.message}</Text>
+            <>
+              <Text>Houve um erro ao buscar os dados {error.message}</Text>
+            </>
+          )}
+          {data?.length === 0 && (
+            <View style={style.emptyContainer}>
+              <Image
+                style={style.emptyImage}
+                source={{
+                  uri: "https://static.vecteezy.com/system/resources/previews/005/073/059/original/empty-box-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-vector.jpg",
+                }}
+              />
+              <Text>Nenhum post encontrado!</Text>
+            </View>
           )}
           {!isLoading &&
             (data as PostDTO[]).map((post) => {
               return <PostCard item={post} key={post.id} />;
             })}
+
+          <Button onPress={doRefetch}>Recarregar</Button>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -92,8 +124,18 @@ const style = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-
     backgroundColor: "#fff",
+  },
+  emptyContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyImage: {
+    width: "30%",
+    height: 400,
   },
 });
 
