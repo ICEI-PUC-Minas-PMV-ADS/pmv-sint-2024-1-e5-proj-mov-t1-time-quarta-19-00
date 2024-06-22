@@ -10,6 +10,7 @@ import {
   ScrollView,
   SafeAreaView,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import {
   ActivityIndicator,
@@ -51,23 +52,25 @@ const PostCard = ({ item }: { item?: Post }) => {
       <Card.Title title={item?.text} subtitle={item?.text.slice(0, 20)} />
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
-        <View style={postStyles.containerImage}>
-          <Image
-            source={{
-              uri: `https://robohash.org/${item?.user.name}?set=set3`,
-            }}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 50,
-              backgroundColor: "#ddd",
-            }}
-          />
-          <View>
-            <Text>{item?.user.name}</Text>
-            <Text>{item?.user.email}</Text>
+        <TouchableOpacity onPress={() => router.push(`/user/${item?.user.id}`)}>
+          <View style={postStyles.containerImage}>
+            <Image
+              source={{
+                uri: `https://robohash.org/${item?.user.name}?set=set3`,
+              }}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 50,
+                backgroundColor: "#ddd",
+              }}
+            />
+            <View>
+              <Text>{item?.user.name}</Text>
+              <Text>{item?.user.email}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <View style={postStyles.containerButtons}>
           <Button icon="comment" mode="text" onPress={goToComments}>
             Comentários
