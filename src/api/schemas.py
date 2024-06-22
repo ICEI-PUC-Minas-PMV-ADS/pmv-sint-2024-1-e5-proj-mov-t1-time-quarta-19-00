@@ -1,4 +1,5 @@
 from pydantic import BaseModel as PydanticBaseModel
+from typing import List  # Import the List type
 
 class BaseModel(PydanticBaseModel):
 	class Config:
@@ -68,21 +69,20 @@ class UserResponse(BaseModel):
 class CommentCreate(BaseModel):
 	userId: int
 	comment: str
-	postId: str
-	timeStamp: str
+	postId: int
 	
 # Pydantic model for request data
 class CommentUpdate(BaseModel):
 	userId: int
 	comment: str
-	postId: str
+	postId: int
 	timeStamp: str
 
 # Pydantic model for response data
 class CommentResponse(BaseModel):
 	userId: int
 	comment: str
-	postId: str
+	postId: int
 	timeStamp: str
 	
 class PostCreate(BaseModel):
@@ -110,23 +110,24 @@ class PostResponse(BaseModel):
 	timeStamp: str
 	imgLink: str
 	user: UserResponse
+	comments: List[CommentResponse]
 
 class PostLikesCreate(BaseModel):
 	userId: int
-	postId: str
+	postId: int
 	timeStamp: str
 	
 # Pydantic model for request data
 class PostLikesUpdate(BaseModel):
 	userId: int
-	postId: str
+	postId: int
 	timeStamp: str
 
 # Pydantic model for response data
 class PostLikesResponse(BaseModel):
 	id: int
 	userId: int
-	postId: str
+	postId: int
 	timeStamp: str
 	
 class UserFavoritesCreate(BaseModel):

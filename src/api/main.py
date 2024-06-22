@@ -158,11 +158,12 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
 # API endpoint to create an comment
 @app.post("/comments/", response_model=CommentResponse)
 async def create_comment(comment: CommentCreate, db: Session = Depends(get_db)):
-	db_comment = Comment(**comment.dict())
-	db.add(db_comment)
-	db.commit()
-	db.refresh(db_comment)
-	return db_comment
+    db_comment = Comment(**comment.dict())
+    db_comment.timeStamp = datetime.datetime.now()
+    db.add(db_comment)
+    db.commit()
+    db.refresh(db_comment)
+    return db_comment
 
 # API endpoint to update an comment by ID
 @app.put("/comments/{comment_id}", response_model=CommentResponse)
