@@ -38,12 +38,26 @@ const User = () => {
             <Text variant="bodyLarge">{user.email}</Text>
           </View>
         </View>
-        <Button icon="post" mode="contained-tonal" disabled>
-          Meus Posts
-        </Button>
-        <Button icon="cog" mode="contained-tonal" disabled>
-          Configurações
-        </Button>
+        {user.isInstitution && (
+          <>
+            <Button
+              icon="post"
+              mode="contained-tonal"
+              onPress={() => router.replace(`/user/${user.userId}`)}
+            >
+              Meus Posts
+            </Button>
+            <Button
+              icon="cog"
+              mode="contained-tonal"
+              onPress={() =>
+                router.replace(`/user/${user.userId}?settings=true`)
+              }
+            >
+              Configurações
+            </Button>
+          </>
+        )}
         <Button icon="logout" mode="contained-tonal" onPress={doLogout}>
           Sair
         </Button>

@@ -1,6 +1,6 @@
-import usePosts from "@/dataHooks/usePosts";
+import usePosts, { usePostDeleteMutation } from "@/dataHooks/usePosts";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -13,8 +13,10 @@ import {
   Avatar,
   Button,
   Card,
+  Dialog,
   Divider,
   FAB,
+  Portal,
   Text,
 } from "react-native-paper";
 import { Post, UserComplete } from "@/services";
@@ -27,7 +29,15 @@ export type PostDTO = {
   imgLink: string;
 };
 
-const PostCard = ({ item }: { item?: Post }) => {
+const PostCard = ({
+  item,
+  allowDelete,
+  onDeletePress,
+}: {
+  item?: Post;
+  allowDelete?: boolean;
+  onDeletePress?: () => void;
+}) => {
   const goToComments = () => {
     router.replace(`/comments/${item?.id}`);
   };
@@ -49,12 +59,20 @@ const PostCard = ({ item }: { item?: Post }) => {
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
         <View style={postStyles.containerButtons}>
-          <Button icon="comment" mode="text" onPress={goToComments}>
-            Comentários
-          </Button>
-          <Button icon="eye" mode="contained" onPress={goToPost}>
-            Ler tudo
-          </Button>
+          {allowDelete ? (
+            <Button icon="delete" mode="text" onPress={onDeletePress}>
+              Excluir Post
+            </Button>
+          ) : (
+            <>
+              <Button icon="comment" mode="text" onPress={goToComments}>
+                Comentários
+              </Button>
+              <Button icon="eye" mode="contained" onPress={goToPost}>
+                Ler tudo
+              </Button>
+            </>
+          )}
         </View>
       </Card.Content>
     </Card>
@@ -87,10 +105,15 @@ const postStyles = StyleSheet.create({
 });
 
 const UserPosts = () => {
-  const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
-  const data = cData as Post[];
-  const { slug: userId } = useLocalSearchParams();
-  const { data: cUserData } = useUsers(Number(userId));
+  const { slug: userId, ...params } = useLocalSearchParams();
+  const isSettingsActive = params?.settings === "true";
+  const {
+    data: cUserData,
+    refetch,
+    isLoading,
+    isError,
+    error,
+  } = useUsers(Number(userId));
   const userData = cUserData as UserComplete;
   const doRefetch = () => {
     refetch();
@@ -100,9 +123,41 @@ const UserPosts = () => {
     router.push("/post/new");
   };
 
+  const [postDeleteId, setPostDeleteId] = useState<number | null>(null);
+
+  const doDeletePost = (postId: number) => {
+    setPostDeleteId(postId);
+  };
+  const cleanPostDeleteId = () => {
+    setPostDeleteId(null);
+  };
+
+  const { mutateAsync } = usePostDeleteMutation();
+
+  const doConfirmDeletePost = async () => {
+    if (!postDeleteId) {
+      return;
+    }
+
+    await mutateAsync(postDeleteId);
+    cleanPostDeleteId();
+    doRefetch();
+  };
+
   return (
     <SafeAreaView style={style.wrapper}>
-      <Header goBack="/feed" title={`Perfil de ${userData.name}`} />
+      <Header goBack="/feed" title={`Perfil de ${userData?.name}`} />
+      <Portal>
+        <Dialog visible={Boolean(postDeleteId)} onDismiss={cleanPostDeleteId}>
+          <Dialog.Content>
+            <Text>Tem certeza que deseja excluir este post?</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={cleanPostDeleteId}>Cancel</Button>
+            <Button onPress={doConfirmDeletePost}>Ok</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
       <ScrollView style={style.feed}>
         <View style={style.container}>
           <View style={style.containerUserData}>
@@ -112,7 +167,9 @@ const UserPosts = () => {
                 backgroundColor: "#ddd",
                 marginRight: 8,
               }}
-              source={{ uri: `https://robohash.org/bla?set=set3` }}
+              source={{
+                uri: `https://robohash.org/${userData?.username}?set=set3`,
+              }}
             />
             <View>
               <View>
@@ -122,9 +179,9 @@ const UserPosts = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {userData.name} ({userData.username})
+                  {userData?.name} ({userData?.username})
                 </Text>
-                <Text>{userData.email}</Text>
+                <Text>{userData?.email}</Text>
                 <Text>
                   Posts: {userData?.posts?.length} | Comentários:{" "}
                   {userData?.posts?.length}
@@ -149,7 +206,7 @@ const UserPosts = () => {
               <Text>Houve um erro ao buscar os dados {error.message}</Text>
             </>
           )}
-          {data?.length === 0 && (
+          {userData?.posts?.length === 0 && (
             <View style={style.emptyContainer}>
               <Image
                 style={style.emptyImage}
@@ -161,8 +218,15 @@ const UserPosts = () => {
             </View>
           )}
           {!isLoading &&
-            userData.posts.map((post) => {
-              return <PostCard item={post} key={post.id} />;
+            userData?.posts.map((post) => {
+              return (
+                <PostCard
+                  allowDelete={isSettingsActive}
+                  onDeletePress={() => doDeletePost(post.id as number)}
+                  item={post}
+                  key={post.id}
+                />
+              );
             })}
 
           <Button onPress={doRefetch}>Recarregar</Button>
