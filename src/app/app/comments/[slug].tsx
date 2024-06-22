@@ -1,16 +1,20 @@
-import { ScrollView, Text, SafeAreaView, StyleSheet } from "react-native";
+import { ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
-import { Appbar } from "react-native-paper";
+import { Text, Appbar, Button } from "react-native-paper";
 import { router, useLocalSearchParams } from "expo-router";
 import usePosts from "@/dataHooks/usePosts";
-import { PostDTO } from "../feed";
+import { Post } from "@/services";
 
 type Props = {};
 
 const PostComments = (props: Props) => {
   const { slug } = useLocalSearchParams();
   const { data } = usePosts(+(slug || 0) || null);
-  const castData = data as PostDTO;
+  const post = data as Post;
+
+  const doComment = () => {
+    router.replace(`/comments/${post?.id}/new`);
+  };
 
   const goToPosts = () => {
     router.replace("/feed");
@@ -20,10 +24,15 @@ const PostComments = (props: Props) => {
     <SafeAreaView style={styles.containerScrollArea}>
       <Appbar.Header>
         <Appbar.BackAction onPress={goToPosts} />
-        <Appbar.Content title={`Comentários do post ${castData?.id ?? ""}`} />
+        <Appbar.Content title={`Comentários do post ${post?.title ?? ""}`} />
       </Appbar.Header>
       <ScrollView style={styles.containerPostText}>
-        <Text>PostComments</Text>
+        <Text variant="bodyLarge">
+          {post?.comments?.length === 0
+            ? "Ainda não fizeram um comentário! \n Seja o primeiro!"
+            : ""}
+        </Text>
+        <Button onPress={doComment}>Adicionar comentário</Button>
       </ScrollView>
     </SafeAreaView>
   );
