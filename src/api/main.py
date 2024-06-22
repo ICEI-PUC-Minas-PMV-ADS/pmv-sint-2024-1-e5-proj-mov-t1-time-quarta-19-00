@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List  # Import the List type
-from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate
+from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate, UserCompleteResponse
 from models import Item, Institution, User, Comment, Post, PostLikes, UserFavorites
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
@@ -132,7 +132,7 @@ async def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_
     return updated_user.first()  # Refresh and return updated user
 
 # API endpoint to read an user by ID
-@app.get("/users/{user_id}", response_model=UserResponse)
+@app.get("/users/{user_id}", response_model=UserCompleteResponse)
 async def read_user(user_id: int, db: Session = Depends(get_db)):
 	db_user = db.query(User).filter(User.id == user_id).first()
 	if db_user is None:

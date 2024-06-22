@@ -146,3 +146,11 @@ class UserFavoritesResponse(BaseModel):
 	id: int
 	userId: int
 	InstitutionId: int
+	
+class UserCompleteResponse(BaseModel):
+	id: int
+	name: str
+	email: str
+	username: str
+	posts: List[PostResponse]
+	comments: List[CommentResponse]
