@@ -7,9 +7,20 @@ Enumere quais cenários de testes foram selecionados para teste. Neste tópico o
 
 # Plano de Teste
 
-## Caso de Teste CT-01: Cadastro de Instituição
 
-| Requisito Associado | RF-001 - O sistema deve permitir o cadastro de novas instituições. |
+## Caso de Teste CT-01: Acesso ao Feed
+
+| Requisito Associado | RF-001 - Os usuários podem acessar o feed de postagens. |
+|---------------------|---------------------------------------------|
+| **Propósito do Teste** | Verificar se os usuários conseguem acessar o feed de postagens. |
+| **Procedimentos**   | Abrir o app. |
+| **Critério de Sucesso** | Deve exibir as últimas postagens feitas pelos usuários e um botão que permita fazer login. |
+
+---
+
+## Caso de Teste CT-02: Cadastro de Instituição
+
+| Requisito Associado | RF-002 - O sistema deve permitir o cadastro de novas instituições. |
 |---------------------|---------------------------------------------------|
 | **Propósito do Teste** | Verificar se o sistema permite o cadastro de novas instituições. |
 | **Procedimentos**   | 1. Acessar o formulário de cadastro de instituições, preencher todos os campos e tocar em "Cadastrar" |
@@ -17,9 +28,9 @@ Enumere quais cenários de testes foram selecionados para teste. Neste tópico o
 
 ---
 
-## Caso de Teste CT-02: Cadastro de Usuário
+## Caso de Teste CT-03: Cadastro de Usuário
 
-| Requisito Associado | RF-002 - Os usuários podem se cadastrar no sistema. |
+| Requisito Associado | RF-003 - Os usuários podem se cadastrar no sistema. |
 |---------------------|---------------------------------------------|
 | **Propósito do Teste** | Verificar se os usuários conseguem se cadastrar no sistema. |
 | **Procedimentos**   | 1. Acessar o formulário de cadastro de usuários, preencher todos os campos e tocar em "Cadastrar" |
@@ -27,9 +38,9 @@ Enumere quais cenários de testes foram selecionados para teste. Neste tópico o
 
 ---
 
-## Caso de Teste CT-03: Login
+## Caso de Teste CT-04: Login
 
-| Requisito Associado | RF-003 - Os usuários podem fazer login no sistema. |
+| Requisito Associado | RF-004 - Os usuários podem fazer login no sistema. |
 |---------------------|---------------------------------------------|
 | **Propósito do Teste** | Verificar se os usuários conseguem fazer login no sistema. |
 | **Procedimentos**   | 1. Acessar a página de login, preencher os campos username e senha, e tocar em em "Login" |
@@ -37,17 +48,7 @@ Enumere quais cenários de testes foram selecionados para teste. Neste tópico o
 
 ---
 
-## Caso de Teste CT-04: Acesso ao Feed //PASSAR PARA 1º CASO DE TESTES
-
-| Requisito Associado | RF-004 - Os usuários podem acessar o feed de postagens. |
-|---------------------|---------------------------------------------|
-| **Propósito do Teste** | Verificar se os usuários conseguem acessar o feed de postagens. |
-| **Procedimentos**   | 1. Abrir o app. |
-| **Critério de Sucesso** | Deve exibir as últimas postagens feitas pelos usuários e um botão que permita fazer login. |
-
----
-
-## Caso de Teste CT-05: Comentário na Postagem
+## Caso de Teste CT-05: Comentário Post
 
 | Requisito Associado | RF-005 - Os usuários podem adicionar comentários nas postagens do feed. |
 |---------------------|---------------------------------------------|
