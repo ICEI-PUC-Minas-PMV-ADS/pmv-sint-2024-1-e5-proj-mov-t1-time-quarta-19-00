@@ -3,14 +3,16 @@ import { router } from "expo-router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-export const useAuth = () => {
-  const { loggedIn, ...user } = useSelector((state: RootState) => state.user);
+export const useAuth = (onlyData = false) => {
+  const user = useSelector((state: RootState) => state.user);
+
+  if (onlyData) return user;
 
   useEffect(() => {
-    if (!loggedIn) {
+    if (!user?.loggedIn) {
       router.replace("/login");
     }
-  }, [loggedIn]);
+  }, [user?.loggedIn]);
 
   return user;
 };
