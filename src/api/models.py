@@ -28,6 +28,7 @@ class User(Base):
 	id = Column(Integer, primary_key=True, index=True)
 	name = Column(String, index=True)
 	username = Column(String)
+	email = Column(String)
 	password = Column(String)
 
 
@@ -66,3 +67,4 @@ class UserFavorites(Base):
 	id = Column(Integer, primary_key=True, index=True)
 	userId = userId = Column(Integer, ForeignKey('users.id')) # Adiciona relacionamento
 	institutionId = institutionId = Column(Integer, ForeignKey('institutions.id')) # Adiciona relacionamento
+

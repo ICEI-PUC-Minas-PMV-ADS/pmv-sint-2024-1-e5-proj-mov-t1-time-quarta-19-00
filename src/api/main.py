@@ -4,12 +4,22 @@ from typing import List  # Import the List type
 from schemas import ItemCreate, ItemUpdate, ItemResponse, InstitutionCreate, InstitutionUpdate, InstitutionResponse, UserCreate, UserResponse, UserUpdate, CommentCreate, CommentResponse, CommentUpdate, PostCreate, PostResponse, PostUpdate, PostLikesCreate, PostLikesResponse, PostLikesUpdate, UserFavoritesCreate, UserFavoritesResponse, UserFavoritesUpdate
 from models import Item, Institution, User, Comment, Post, PostLikes, UserFavorites
 from database import get_db
+from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
+
 
 # FastAPI app instance
 app = FastAPI()
 
 app.include_router(auth_router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # API endpoint to create an item
 @app.post("/items/", response_model=ItemResponse)

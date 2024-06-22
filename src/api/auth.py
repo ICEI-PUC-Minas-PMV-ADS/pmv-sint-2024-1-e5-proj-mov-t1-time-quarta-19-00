@@ -6,13 +6,9 @@ import jwt
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from database import get_db
-from models import User  # Importe a classe de modelo SQLAlchemy
+from models import User
 
 router = APIRouter()
-
-class UserInDB(BaseModel):
-    username: str
-    password: str
 
 def authenticate_user(username: str, password: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == username).first()
@@ -38,9 +34,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 def create_access_token(*, data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.now(datetime.UTC) + expires_delta
+        expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.now(datetime.UTC) + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, "your_secret_key", algorithm="HS256")
     return encoded_jwt
