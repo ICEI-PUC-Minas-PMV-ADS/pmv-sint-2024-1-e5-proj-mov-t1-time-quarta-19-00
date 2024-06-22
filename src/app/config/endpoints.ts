@@ -3,4 +3,5 @@ export const endpoints = {
   users: "/users",
   comments: "/comments",
   auth: "/token",
+  postLikes: "/postLikes",
 };
