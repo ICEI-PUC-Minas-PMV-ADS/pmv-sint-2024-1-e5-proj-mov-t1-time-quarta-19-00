@@ -1,25 +1,18 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
 import { Appbar, Button, TextInput } from "react-native-paper";
 import { router } from "expo-router";
 import { Post } from "@/services";
 import { usePostCreateMutation } from "@/dataHooks/usePosts";
 import ErrorMessage from "@/components/ErrorMessage";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import useAuth from "@/hooks/useAuth";
 
 type Props = {};
 
 const NewPost = (props: Props) => {
   const [postData, setPostData] = useState({} as Post);
   const [error, setError] = useState("");
-  const { userId, loggedIn } = useSelector((state: RootState) => state.user);
-
-  useEffect(() => {
-    if (!loggedIn) {
-      router.replace("/login");
-    }
-  }, [loggedIn]);
+  const { userId } = useAuth();
 
   const updatePostData = (key: keyof Post, value: string) => {
     setPostData({ ...postData, [key]: value });
