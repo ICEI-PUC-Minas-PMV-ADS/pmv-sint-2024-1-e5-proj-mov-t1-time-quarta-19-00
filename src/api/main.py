@@ -114,11 +114,11 @@ async def delete_Institution(Institution_id: int, db: Session = Depends(get_db))
 # API endpoint to create an user
 @app.post("/users/", response_model=UserResponse)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
-	db_user = User(**user.dict())
-	db.add(db_user)
-	db.commit()
-	db.refresh(db_user)
-	return db_user
+    db_user = User(**user.dict())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
 # API endpoint to update an user by ID
 @app.put("/users/{user_id}", response_model=UserResponse)

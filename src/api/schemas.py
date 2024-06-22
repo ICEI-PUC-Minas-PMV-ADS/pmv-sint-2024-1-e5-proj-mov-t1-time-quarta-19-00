@@ -65,6 +65,9 @@ class UserResponse(BaseModel):
 	name: str
 	email: str
 	username: str
+	isInstitution: bool
+	cnpj: str
+
 	
 class CommentCreate(BaseModel):
 	userId: int
@@ -152,5 +155,7 @@ class UserCompleteResponse(BaseModel):
 	name: str
 	email: str
 	username: str
+	isInstitution: bool
+	cnpj: str
 	posts: List[PostResponse]
 	comments: List[CommentResponse]

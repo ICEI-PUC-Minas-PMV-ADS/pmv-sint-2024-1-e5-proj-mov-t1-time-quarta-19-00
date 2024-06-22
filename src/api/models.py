@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -33,6 +33,8 @@ class User(Base):
 	posts = relationship("Post", back_populates="user")
 	comments = relationship("Comment", back_populates="user")
 
+	isInstitution = Column(Boolean, default=False)
+	cnpj = Column(String, default="")
 	
 # Database posts model
 class Post(Base):
