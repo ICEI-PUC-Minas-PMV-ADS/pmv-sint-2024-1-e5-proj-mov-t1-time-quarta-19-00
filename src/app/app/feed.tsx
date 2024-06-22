@@ -49,7 +49,7 @@ const PostCard = ({ item }: { item?: Post }) => {
             : "https://picsum.photos/700",
         }}
       />
-      <Card.Title title={item?.text} subtitle={item?.text.slice(0, 20)} />
+      <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
         <TouchableOpacity onPress={() => router.push(`/user/${item?.user.id}`)}>

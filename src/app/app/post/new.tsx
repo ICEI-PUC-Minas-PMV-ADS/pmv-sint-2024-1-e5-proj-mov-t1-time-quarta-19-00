@@ -1,18 +1,33 @@
 import { View, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Appbar, Button, TextInput } from "react-native-paper";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Post } from "@/services";
-import { usePostCreateMutation } from "@/dataHooks/usePosts";
+import usePosts, {
+  usePostCreateMutation,
+  usePostUpdateMutation,
+} from "@/dataHooks/usePosts";
 import ErrorMessage from "@/components/ErrorMessage";
 import useAuth from "@/hooks/useAuth";
 
 type Props = {};
 
 const NewPost = (props: Props) => {
-  const [postData, setPostData] = useState({} as Post);
+  const searchInfo = useLocalSearchParams();
+  const editPostId = searchInfo?.editPost;
+  const isInEditMode = Boolean(editPostId);
+
+  const { data: postInitialData = {} } = usePosts(Number(editPostId));
+
+  const [postData, setPostData] = useState(postInitialData as Post);
   const [error, setError] = useState("");
   const { userId } = useAuth();
+
+  useEffect(() => {
+    if (postInitialData) {
+      setPostData(postInitialData as Post);
+    }
+  }, [postInitialData]);
 
   const updatePostData = (key: keyof Post, value: string) => {
     setPostData({ ...postData, [key]: value });
@@ -22,6 +37,7 @@ const NewPost = (props: Props) => {
   };
 
   const { mutateAsync } = usePostCreateMutation();
+  const { mutateAsync: updateMutateAsync } = usePostUpdateMutation();
 
   const doRegisterPost = async () => {
     try {
@@ -32,6 +48,16 @@ const NewPost = (props: Props) => {
         Object.keys(postData).length === 0
       ) {
         setError("Preencha todos os dados");
+        return;
+      }
+
+      if (isInEditMode) {
+        await updateMutateAsync({
+          ...postData,
+          userId,
+          id: Number(editPostId),
+        });
+        goToFeed();
         return;
       }
 
@@ -46,7 +72,7 @@ const NewPost = (props: Props) => {
     <View style={styles.container}>
       <Appbar.Header>
         <Appbar.BackAction onPress={goToFeed} />
-        <Appbar.Content title="Novo post" />
+        <Appbar.Content title={isInEditMode ? "Editar post" : "Novo post"} />
       </Appbar.Header>
       <View style={styles.containerForm}>
         <Image
@@ -77,8 +103,12 @@ const NewPost = (props: Props) => {
           value={postData.text}
           onChangeText={(text) => updatePostData("text", text)}
         />
-        <Button icon="plus" mode="contained" onPress={doRegisterPost}>
-          Cadastrar post
+        <Button
+          icon={isInEditMode ? "check" : "plus"}
+          mode="contained"
+          onPress={doRegisterPost}
+        >
+          {isInEditMode ? "Salvar Post" : "Cadastrar Post"}
         </Button>
         <Button mode="text" onPress={goToFeed}>
           Cancelar

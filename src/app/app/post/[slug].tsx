@@ -11,11 +11,42 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Appbar, Button, Divider, Text } from "react-native-paper";
 import { Post as IPost } from "@/services";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  usePostLikeCreateMutation,
+  usePostLikeDeleteMutation,
+} from "@/dataHooks/usePostLike";
+import useAuth from "@/hooks/useAuth";
 
 const Post = () => {
   const { slug } = useLocalSearchParams();
-  const { data, isLoading } = usePosts(+(slug || 0) || null);
+  const { data, isLoading, refetch } = usePosts(+(slug || 0) || null);
   const castData = data as IPost;
+  const { userId, loggedIn, redirectToLogin } = useAuth(true);
+
+  const { mutateAsync: createPostLike } = usePostLikeCreateMutation();
+  const { mutateAsync: deletePostLike } = usePostLikeDeleteMutation();
+  const userLikedPost = castData?.likes.some((like) => like.userId === userId);
+  const addOrRemoveLike = async () => {
+    if (!loggedIn) {
+      redirectToLogin();
+    }
+    try {
+      if (userLikedPost) {
+        const likeId = castData?.likes.find(
+          (like) => like.userId === userId
+        )?.id;
+        await deletePostLike(likeId as number);
+        return;
+      }
+
+      await createPostLike({
+        postId: castData?.id as number,
+        userId,
+      });
+    } finally {
+      refetch();
+    }
+  };
 
   if (isLoading) {
     return (
@@ -31,6 +62,10 @@ const Post = () => {
 
   const goToComments = () => {
     router.replace(`/comments/${castData?.id}`);
+  };
+
+  const goToEditPost = () => {
+    router.replace(`/post/new?editPost=${castData?.id}`);
   };
 
   return (
@@ -86,7 +121,14 @@ const Post = () => {
               </Text>
             </View>
           </View>
-
+          <Button
+            icon="pencil"
+            mode="contained-tonal"
+            onPress={goToEditPost}
+            style={{ marginTop: 16 }}
+          >
+            Editar post
+          </Button>
           <Button
             icon="comment"
             mode="contained-tonal"
@@ -94,6 +136,14 @@ const Post = () => {
             style={{ marginTop: 16 }}
           >
             Ver comentários
+          </Button>
+          <Button
+            icon="heart"
+            mode={userLikedPost ? "contained" : "contained-tonal"}
+            onPress={addOrRemoveLike}
+            style={{ marginTop: 16 }}
+          >
+            Gostei
           </Button>
         </View>
       </ScrollView>
