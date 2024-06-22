@@ -22,4 +22,11 @@ export const usePostCreateMutation = () => {
   });
 };
 
+export const usePostDeleteMutation = () => {
+  return useMutation({
+    mutationFn: postServices.deletePostById,
+    mutationKey: ["posts"],
+  });
+};
+
 export default usePosts;

@@ -24,4 +24,7 @@ export const postServices = {
   fetchPostById: async (id: number) => {
     return (await ApiServices.search(endpoints.posts + "/" + id)).data as Post;
   },
+  deletePostById: async (postId: number) => {
+    return (await ApiServices.delete(endpoints.posts + "/" + postId)).data;
+  },
 };
