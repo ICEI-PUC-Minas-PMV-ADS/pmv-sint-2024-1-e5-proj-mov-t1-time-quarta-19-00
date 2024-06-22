@@ -7,15 +7,19 @@ interface UserState {
   userId: number;
   name: string;
   email: string;
+  isInstitution: boolean;
+  cnpj: string;
 }
 
 const initialState: UserState = {
   access_token: "",
   username: "",
   loggedIn: false,
+  isInstitution: false,
   userId: 0,
   name: "",
   email: "",
+  cnpj: "",
 };
 
 const userSlice = createSlice({
@@ -28,11 +32,20 @@ const userSlice = createSlice({
       state.userId = action.payload.userId;
       state.name = action.payload.name;
       state.email = action.payload.email;
+      state.isInstitution = action.payload.isInstitution;
+      state.cnpj = action.payload.cnpj;
+
       state.loggedIn = true;
     },
     logout: (state) => {
-      state.username = "";
-      state.access_token = "";
+      state.username = initialState["username"];
+      state.access_token = initialState["access_token"];
+      state.userId = initialState["userId"];
+      state.name = initialState["name"];
+      state.email = initialState["email"];
+      state.isInstitution = initialState["isInstitution"];
+      state.cnpj = initialState["cnpj"];
+
       state.loggedIn = false;
     },
   },

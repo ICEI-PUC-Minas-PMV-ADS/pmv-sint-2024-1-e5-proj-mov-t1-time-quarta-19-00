@@ -8,6 +8,8 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  isInstitution: boolean;
+  cnpj?: string;
 }
 
 export interface UserComplete extends User {
@@ -33,6 +35,8 @@ export const userServices = {
     username: string;
     name: string;
     userId: number;
+    isInstitution: boolean;
+    cnpj: string;
   }> => {
     const form_data = new FormData();
     form_data.append("username", user.username);
@@ -49,6 +53,8 @@ export const userServices = {
       username: tokenDecoded.username,
       name: tokenDecoded.name,
       userId: tokenDecoded.userId,
+      isInstitution: tokenDecoded.isInstitution,
+      cnpj: tokenDecoded.cnpj,
     };
   },
 };
