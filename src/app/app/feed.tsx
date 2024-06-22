@@ -16,9 +16,11 @@ import {
   Appbar,
   Button,
   Card,
+  FAB,
   Text,
 } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+import { Post } from "@/services";
 
 export type PostDTO = {
   id: string;
@@ -26,7 +28,7 @@ export type PostDTO = {
   imgLink: string;
 };
 
-const PostCard = ({ item }: { item?: PostDTO }) => {
+const PostCard = ({ item }: { item?: Post }) => {
   const goToComments = () => {
     router.replace(`/comments/${item?.id}`);
   };
@@ -58,7 +60,8 @@ const PostCard = ({ item }: { item?: PostDTO }) => {
 };
 
 const Feed = () => {
-  const { data = [], isLoading, isError, error, refetch } = usePosts();
+  const { data: cData = [], isLoading, isError, error, refetch } = usePosts();
+  const data = cData as Post[];
   const dispatch = useDispatch();
 
   const doLogout = () => {
@@ -71,10 +74,13 @@ const Feed = () => {
     refetch();
   };
 
+  const doRegisterPost = () => {
+    router.push("/post/new");
+  };
+
   return (
     <SafeAreaView style={style.wrapper}>
       <Appbar.Header>
-        {/* <Appbar.BackAction /> */}
         <Appbar.Content title="Feed" />
         {loggedIn ? (
           <Appbar.Action icon="logout" onPress={doLogout} />
@@ -102,13 +108,14 @@ const Feed = () => {
             </View>
           )}
           {!isLoading &&
-            (data as PostDTO[]).map((post) => {
+            data.map((post) => {
               return <PostCard item={post} key={post.id} />;
             })}
 
           <Button onPress={doRefetch}>Recarregar</Button>
         </View>
       </ScrollView>
+      <FAB icon="plus" style={style.fab} onPress={doRegisterPost} />
     </SafeAreaView>
   );
 };
@@ -134,8 +141,15 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   emptyImage: {
-    width: "30%",
-    height: 400,
+    width: 120,
+    height: 200,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    zIndex: 88,
   },
 });
 
