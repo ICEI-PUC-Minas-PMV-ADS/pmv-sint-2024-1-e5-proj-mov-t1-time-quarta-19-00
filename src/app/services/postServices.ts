@@ -2,6 +2,7 @@ import { endpoints } from "@/config/endpoints";
 import { ApiServices } from "./apiServices";
 import { User } from "./userServices";
 import { Comment } from "./commentServices";
+import { PostLike } from "./postLikeServices";
 
 export interface Post {
   id?: number;
@@ -12,6 +13,7 @@ export interface Post {
   timeStamp: string;
   user: User;
   comments: Comment[];
+  likes: PostLike[];
 }
 
 export const postServices = {
