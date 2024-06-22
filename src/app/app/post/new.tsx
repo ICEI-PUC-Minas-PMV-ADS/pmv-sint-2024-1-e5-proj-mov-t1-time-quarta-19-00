@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Appbar, Button, TextInput } from "react-native-paper";
 import { router } from "expo-router";
 import { Post } from "@/services";
@@ -13,7 +13,13 @@ type Props = {};
 const NewPost = (props: Props) => {
   const [postData, setPostData] = useState({} as Post);
   const [error, setError] = useState("");
-  const { userId } = useSelector((state: RootState) => state.user);
+  const { userId, loggedIn } = useSelector((state: RootState) => state.user);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      router.replace("/login");
+    }
+  }, [loggedIn]);
 
   const updatePostData = (key: keyof Post, value: string) => {
     setPostData({ ...postData, [key]: value });
@@ -50,6 +56,17 @@ const NewPost = (props: Props) => {
         <Appbar.Content title="Novo post" />
       </Appbar.Header>
       <View style={styles.containerForm}>
+        <Image
+          source={{
+            uri: "https://i.ytimg.com/vi/ZkD59RKLLls/maxresdefault.jpg",
+          }}
+          style={{
+            width: 200,
+            height: 200,
+            margin: "auto",
+            marginVertical: 16,
+          }}
+        />
         <ErrorMessage error={error} />
         <TextInput
           label="Título do Post"
