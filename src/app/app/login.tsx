@@ -69,7 +69,7 @@ const Login = (props: Props) => {
   };
 
   return (
-    <View>
+    <View style={style.loginContainer}>
       <Appbar.Header>
         <Appbar.BackAction onPress={goToFeed} />
         <Appbar.Content title="Entrar" />
@@ -109,6 +109,10 @@ const Login = (props: Props) => {
 const style = StyleSheet.create({
   container: {
     padding: 16,
+  },
+  loginContainer: {
+    backgroundColor: "#fff",
+    flex: 1,
   },
   containerForm: {
     display: "flex",
