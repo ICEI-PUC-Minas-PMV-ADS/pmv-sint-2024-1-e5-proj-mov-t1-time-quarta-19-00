@@ -53,6 +53,7 @@ class UserCreate(BaseModel):
 	password: str 
 	isInstitution: bool = False
 	cnpj: str  = ""
+	whatsapp: str = ""
 	
 # Pydantic model for request data
 class UserUpdate(BaseModel):
@@ -69,6 +70,7 @@ class UserResponse(BaseModel):
 	username: str
 	isInstitution: bool
 	cnpj: str
+	whatsapp: str
 
 	
 class CommentCreate(BaseModel):
@@ -158,6 +160,7 @@ class UserCompleteResponse(BaseModel):
 	username: str
 	isInstitution: bool
 	cnpj: str
+	whatsapp: str
 	posts: List[PostResponse]
 	posts: List[PostResponse]
 	comments: List[CommentResponse]

@@ -37,7 +37,8 @@ const RegisterUser = (props: Props) => {
       userData?.password === "" ||
       userData?.name === "" ||
       userData?.username === "" ||
-      (isInstitution && userData?.cnpj === "")
+      (isInstitution && userData?.cnpj === "") ||
+      (isInstitution && userData?.whatsapp === "")
     ) {
       setError("Preencha todos os dados");
     }
@@ -117,12 +118,20 @@ const RegisterUser = (props: Props) => {
             onChangeText={(text) => handleData("username", text)}
           />
           {isInstitution && (
-            <TextInput
-              disabled={isIdle}
-              label="CNPJ"
-              value={userData.cnpj}
-              onChangeText={(text) => handleData("cnpj", text)}
-            />
+            <>
+              <TextInput
+                disabled={isIdle}
+                label="CNPJ"
+                value={userData.cnpj}
+                onChangeText={(text) => handleData("cnpj", text)}
+              />
+              <TextInput
+                disabled={isIdle}
+                label="WhatsApp"
+                value={userData.whatsapp}
+                onChangeText={(text) => handleData("whatsapp", text)}
+              />
+            </>
           )}
           <TextInput
             disabled={isIdle}

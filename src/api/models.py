@@ -28,11 +28,13 @@ class User(Base):
 	id = Column(Integer, primary_key=True, index=True)
 	name = Column(String, index=True)
 	username = Column(String)
+	whatsapp = Column(String)
 	email = Column(String)
 	password = Column(String)
 	posts = relationship("Post", back_populates="user")
 	comments = relationship("Comment", back_populates="user")
 	likes = relationship("PostLikes", back_populates="user")
+	
 
 	isInstitution = Column(Boolean, default=False)
 	cnpj = Column(String, default="")
