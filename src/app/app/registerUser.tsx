@@ -8,7 +8,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 
 type Props = {};
 
-type UserRegisterData = User 
+type UserRegisterData = User;
 
 const RegisterUser = (props: Props) => {
   const theme = useTheme();
@@ -21,7 +21,8 @@ const RegisterUser = (props: Props) => {
   };
 
   const validate = () => {
-    const specialCharRegex = /[^a-zA-Z0-9]/;
+    // Updated regex to disallow numbers but allow letters, spaces, and accents
+    const specialCharRegex = /[\d]/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Check if any required field is empty
@@ -36,9 +37,9 @@ const RegisterUser = (props: Props) => {
       return false;
     }
 
-    // Check for special characters in name and username
+    // Check for numbers in name and username
     if (specialCharRegex.test(userData.name) || specialCharRegex.test(userData.username)) {
-      setError("Nome e nome de usuário não podem conter caracteres especiais");
+      setError("Nome e nome de usuário não podem conter números");
       return false;
     }
 
@@ -68,7 +69,7 @@ const RegisterUser = (props: Props) => {
       });
       router.replace("/login");
     } catch (err) {
-      setError("Erro ao cadastrar usuário");
+      setError("Erro ao cadastrar usuário");
     }
   };
 
@@ -159,7 +160,7 @@ const RegisterUser = (props: Props) => {
           </Button>
           <Button mode="text" onPress={doAsInstitution}>
             {isInstitution
-              ? "Cadastrar-se como usuário"
+              ? "Cadastrar-se como usuário"
               : "Cadastrar-se como instituição"}
           </Button>
           <Button mode="text" onPress={doLogin}>
