@@ -20,31 +20,37 @@ const RegisterUser = (props: Props) => {
     setUserData({ ...userData, [key]: value });
   };
 
-  /**
-   * Verifica se todos os itens não estão vazios no userData,
-   * caso esteja, retorna um erro
-   */
   const validate = () => {
-    // se o objeto estiver vazio, retorna um erro
-    if (Object.keys(userData).length === 0) {
+    const specialCharRegex = /[^a-zA-Z0-9]/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Check if any required field is empty
+    if (
+      !userData?.email ||
+      !userData?.password ||
+      !userData?.name ||
+      !userData?.username ||
+      (isInstitution && (!userData?.cnpj || !userData?.whatsapp))
+    ) {
       setError("Preencha todos os dados");
       return false;
     }
 
-    // estrutura do objeto fim
-    if (
-      userData?.email === "" ||
-      userData?.password === "" ||
-      userData?.name === "" ||
-      userData?.username === "" ||
-      (isInstitution && userData?.cnpj === "") ||
-      (isInstitution && userData?.whatsapp === "")
-    ) {
-      setError("Preencha todos os dados");
+    // Check for special characters in name and username
+    if (specialCharRegex.test(userData.name) || specialCharRegex.test(userData.username)) {
+      setError("Nome e nome de usuário não podem conter caracteres especiais");
+      return false;
     }
 
-    if (Object.values(userData).some((value) => value === "")) {
-      setError("Preencha todos os dados");
+    // Check if email is valid
+    if (!emailRegex.test(userData.email)) {
+      setError("Email inválido");
+      return false;
+    }
+
+    // Check if CNPJ contains exactly 14 digits
+    if (isInstitution && (userData.cnpj.length !== 14 || isNaN(Number(userData.cnpj)))) {
+      setError("CNPJ deve conter exatamente 14 dígitos numéricos");
       return false;
     }
 
@@ -124,6 +130,8 @@ const RegisterUser = (props: Props) => {
                 label="CNPJ"
                 value={userData.cnpj}
                 onChangeText={(text) => handleData("cnpj", text)}
+                keyboardType="numeric"
+                maxLength={14}
               />
               <TextInput
                 disabled={isIdle}
@@ -174,6 +182,10 @@ const style = StyleSheet.create({
   },
   submitButton: {
     marginTop: 16,
+  },
+  error: {
+    color: "red",
+    marginBottom: 8,
   },
 });
 
