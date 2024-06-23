@@ -17,8 +17,8 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 | ID          | Descrição do Requisito                                                                | Prioridade |
 |-------------|---------------------------------------------------------------------------------------|------------|
 | RF-001      | Implementar um sistema de cadastro intuitivo para que instituições públicas possam registrar informações detalhadas sobre suas atividades, necessidades e oportunidades de voluntariado. | ALTA       |
-| RF-002      | Desenvolver um mecanismo de busca e filtragem eficiente para que os membros da comunidade possam encontrar facilmente instituições próximas e oportunidades de voluntariado relevantes. | ALTA       |
-| RF-003      | Integrar um sistema de gestão de doações para permitir que os usuários façam doações de forma fácil e segura às instituições participantes. | ALTA       |
+| RF-002      | Desenvolver um mecanismo de busca e filtragem eficiente para que os membros da comunidade possam encontrar facilmente instituições próximas e oportunidades de voluntariado relevantes. | BAIXA       |
+| RF-003      | Integrar um sistema de gestão de doações para permitir que os usuários façam doações de forma fácil e segura às instituições participantes. | BAIXA       |
 | RF-004      | Criar um feed de notícias e eventos para manter os usuários atualizados sobre as atividades das instituições e as oportunidades de envolvimento comunitário. | ALTA       |
 
 ### Requisitos não Funcionais
