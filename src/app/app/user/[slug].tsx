@@ -59,7 +59,7 @@ const PostCard = ({
               : "https://picsum.photos/700",
           }}
         />
-        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 100)} />
         <Divider style={postStyles.divider} />
       </TouchableOpacity>
       <Card.Content style={postStyles.containerUser}>

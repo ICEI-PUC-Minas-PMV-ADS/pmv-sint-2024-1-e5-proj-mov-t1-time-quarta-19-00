@@ -6,6 +6,7 @@ import useAuth from "@/hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/features/userSlice";
 import { router } from "expo-router";
+import { formatServices } from "@/services/formatServices";
 
 const User = () => {
   const theme = useTheme();
@@ -38,7 +39,9 @@ const User = () => {
             <Text variant="bodyLarge" style={styles.bold}>
               {user.name}
             </Text>
-            <Text variant="bodyLarge">{user.email}</Text>
+            <Text variant="bodyLarge">
+              {formatServices.truncateEmail(user.email)}
+            </Text>
           </View>
         </View>
         {user.isInstitution && (

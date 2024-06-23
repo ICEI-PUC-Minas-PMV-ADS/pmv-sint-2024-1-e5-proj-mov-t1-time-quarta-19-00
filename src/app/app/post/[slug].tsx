@@ -16,6 +16,7 @@ import {
   usePostLikeDeleteMutation,
 } from "@/dataHooks/usePostLike";
 import useAuth from "@/hooks/useAuth";
+import { formatServices } from "@/services/formatServices";
 
 const Post = () => {
   const theme = useTheme();
@@ -113,7 +114,9 @@ const Post = () => {
                   />
                   <View>
                     <Text>{castData?.user.name}</Text>
-                    <Text>{castData?.user.email}</Text>
+                    <Text>
+                      {formatServices.truncateEmail(castData?.user.email)}
+                    </Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -122,7 +125,6 @@ const Post = () => {
               <Text variant="bodyMedium">
                 Postado por: {castData.user.name}
               </Text>
-              <Text variant="bodyMedium">Email: {castData.user.email}</Text>
               <Text variant="bodyMedium">
                 {new Date(castData.timeStamp).toLocaleString()}
               </Text>
