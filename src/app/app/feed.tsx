@@ -23,6 +23,7 @@ import {
 import { Post } from "@/services";
 import Header from "@/components/Header";
 import useAuth from "@/hooks/useAuth";
+import { formatServices } from "@/services/formatServices";
 
 export type PostDTO = {
   id: string;
@@ -69,7 +70,9 @@ const PostCard = ({ item }: { item?: Post }) => {
             />
             <View>
               <Text>{item?.user.name}</Text>
-              <Text>{item?.user.email}</Text>
+              <Text>
+                {formatServices.truncateEmail(item?.user?.email ?? "")}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -98,7 +101,7 @@ const PostCard = ({ item }: { item?: Post }) => {
               : "https://picsum.photos/700",
           }}
         />
-        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 100)} />
       </TouchableOpacity>
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
