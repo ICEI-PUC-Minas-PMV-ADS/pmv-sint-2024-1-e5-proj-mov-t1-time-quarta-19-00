@@ -1,4 +1,4 @@
-import usePosts, { usePostDeleteMutation } from "@/dataHooks/usePosts";
+import { usePostDeleteMutation } from "@/dataHooks/usePosts";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   Image,
+  Linking,
 } from "react-native";
 import {
   ActivityIndicator,
@@ -193,16 +194,24 @@ const UserPosts = () => {
                   {userData?.posts?.length}
                 </Text>
               </View>
-              <Button
-                compact
-                icon="whatsapp"
-                mode="contained"
-                style={{
-                  marginTop: 16,
-                }}
-              >
-                Contatar
-              </Button>
+              {userData?.isInstitution && (
+                <Button
+                  compact
+                  icon="whatsapp"
+                  mode="contained"
+                  disabled={!userData?.whatsapp}
+                  onPress={() =>
+                    Linking.openURL(
+                      `whatsapp://send?phone=${userData?.whatsapp}`
+                    )
+                  }
+                  style={{
+                    marginTop: 16,
+                  }}
+                >
+                  Contatar
+                </Button>
+              )}
             </View>
           </View>
           <Divider />
