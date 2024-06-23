@@ -8,7 +8,9 @@ import ErrorMessage from "@/components/ErrorMessage";
 
 type Props = {};
 
-type UserRegisterData = User;
+type UserRegisterData = User & {
+  cnpj?: string; // Make cnpj optional to handle undefined case
+};
 
 const RegisterUser = (props: Props) => {
   const theme = useTheme();
@@ -49,7 +51,7 @@ const RegisterUser = (props: Props) => {
     }
 
     // Check if CNPJ contains exactly 14 digits
-    if (isInstitution && (userData.cnpj.length !== 14 || isNaN(Number(userData.cnpj)))) {
+    if (isInstitution && (userData.cnpj?.length !== 14 || isNaN(Number(userData.cnpj)))) {
       setError("CNPJ deve conter exatamente 14 dígitos numéricos");
       return false;
     }
