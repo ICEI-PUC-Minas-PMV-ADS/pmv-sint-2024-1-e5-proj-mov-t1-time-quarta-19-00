@@ -8,9 +8,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 
 type Props = {};
 
-type UserRegisterData = User & {
-  cnpj?: string; // Make cnpj optional to handle undefined case
-};
+type UserRegisterData = User 
 
 const RegisterUser = (props: Props) => {
   const theme = useTheme();
