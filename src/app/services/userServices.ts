@@ -11,6 +11,7 @@ export interface User {
   password: string;
   isInstitution: boolean;
   cnpj?: string;
+  whatsapp?: string;
 }
 
 export interface UserComplete extends User {
