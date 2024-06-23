@@ -90,22 +90,28 @@ const PostCard = ({ item }: { item?: Post }) => {
           <Text>{item?.comments?.length} </Text>
         </View>
       </View>
-      <Card.Cover
-        source={{
-          uri: item?.imgLink.includes("http")
-            ? item?.imgLink
-            : "https://picsum.photos/700",
-        }}
-      />
-      <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+      <TouchableOpacity onPress={goToPost}>
+        <Card.Cover
+          source={{
+            uri: item?.imgLink.includes("http")
+              ? item?.imgLink
+              : "https://picsum.photos/700",
+          }}
+        />
+        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+      </TouchableOpacity>
       <Divider style={postStyles.divider} />
       <Card.Content style={postStyles.containerUser}>
         <View style={postStyles.containerButtons}>
-          <Button icon="comment" mode="text" onPress={goToComments}>
-            Comentários
-          </Button>
-          <Button icon="eye" mode="contained" onPress={goToPost}>
-            Ler tudo
+          <Button
+            style={{
+              flex: 1,
+            }}
+            icon="comment"
+            mode="text"
+            onPress={goToComments}
+          >
+            Ler Comentários
           </Button>
         </View>
       </Card.Content>

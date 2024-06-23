@@ -102,7 +102,7 @@ const Post = () => {
                 <View style={styles.containerUserCard}>
                   <Image
                     source={{
-                      uri: `https://robohash.org/${castData?.user.name}?set=set3`,
+                      uri: `https://robohash.org/${castData?.user.username}?set=set3`,
                     }}
                     style={{
                       width: 40,

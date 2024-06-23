@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Image,
   Linking,
+  TouchableOpacity,
 } from "react-native";
 import {
   ActivityIndicator,
@@ -50,15 +51,17 @@ const PostCard = ({
 
   return (
     <Card>
-      <Card.Cover
-        source={{
-          uri: item?.imgLink.includes("http")
-            ? item?.imgLink
-            : "https://picsum.photos/700",
-        }}
-      />
-      <Card.Title title={item?.text} subtitle={item?.text.slice(0, 20)} />
-      <Divider style={postStyles.divider} />
+      <TouchableOpacity onPress={goToPost}>
+        <Card.Cover
+          source={{
+            uri: item?.imgLink.includes("http")
+              ? item?.imgLink
+              : "https://picsum.photos/700",
+          }}
+        />
+        <Card.Title title={item?.title} subtitle={item?.text.slice(0, 20)} />
+        <Divider style={postStyles.divider} />
+      </TouchableOpacity>
       <Card.Content style={postStyles.containerUser}>
         <View style={postStyles.containerButtons}>
           {allowDelete ? (
@@ -67,11 +70,15 @@ const PostCard = ({
             </Button>
           ) : (
             <>
-              <Button icon="comment" mode="text" onPress={goToComments}>
+              <Button
+                style={{
+                  flex: 1,
+                }}
+                icon="comment"
+                mode="text"
+                onPress={goToComments}
+              >
                 Comentários
-              </Button>
-              <Button icon="eye" mode="contained" onPress={goToPost}>
-                Ler tudo
               </Button>
             </>
           )}
