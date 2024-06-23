@@ -77,6 +77,11 @@ _________________________________________________
 
 ![POST_EDICAO_ALTA](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/f9bce883-25e5-4a34-aa1a-45614ca3de41)
 
+### Tela de Comentários Post
+_________________________________________________
+
+![COMENTARIOS_ALTA](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/65453d18-4c4d-424d-ae3a-527689d367c1)
+
 
 
 
