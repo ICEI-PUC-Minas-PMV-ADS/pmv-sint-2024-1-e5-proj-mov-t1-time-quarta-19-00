@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
 from backupBd import router as backup_router
 import datetime
+from encryptPassword import encryptPass
 
 # FastAPI app instance
 app = FastAPI()
@@ -117,7 +118,7 @@ async def delete_Institution(Institution_id: int, db: Session = Depends(get_db))
 @app.post("/users/", response_model=UserResponse)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(**user.dict()) 
-    print(db_user.isInstitution)
+    db_user.password = encryptPass(db_user.password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

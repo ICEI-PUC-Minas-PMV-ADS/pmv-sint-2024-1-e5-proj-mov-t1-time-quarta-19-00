@@ -6,12 +6,13 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from database import get_db
 from models import User
+from encryptPassword import encryptPass
 
 router = APIRouter()
 
 def authenticate_user(username: str, password: str, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == username).first()
-    if db_user and db_user.password == password:
+    if db_user and db_user.password == encryptPass(password):
         return db_user
     return None
 
