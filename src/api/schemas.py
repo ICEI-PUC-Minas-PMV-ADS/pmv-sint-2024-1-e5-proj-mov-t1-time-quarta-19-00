@@ -71,6 +71,7 @@ class UserResponse(BaseModel):
 	isInstitution: bool
 	cnpj: str
 	whatsapp: str
+	password: str
 
 	
 class CommentCreate(BaseModel):
