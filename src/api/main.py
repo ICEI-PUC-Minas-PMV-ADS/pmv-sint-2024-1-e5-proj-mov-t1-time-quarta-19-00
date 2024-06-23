@@ -6,12 +6,14 @@ from models import Item, Institution, User, Comment, Post, PostLikes, UserFavori
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
+from backupBd import router as backup_router
 import datetime
 
 # FastAPI app instance
 app = FastAPI()
 
 app.include_router(auth_router)
+app.include_router(backup_router)
 
 app.add_middleware(
     CORSMiddleware,
