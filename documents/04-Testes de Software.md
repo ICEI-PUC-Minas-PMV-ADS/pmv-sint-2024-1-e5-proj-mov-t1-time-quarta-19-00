@@ -122,6 +122,8 @@ Enumere quais cenários de testes foram selecionados para teste. Neste tópico o
 ---
 
 
+
+
 ## Evidências de Testes de Software
 
 Apresente imagens e/ou vídeos que comprovam que um determinado teste foi executado, e o resultado esperado foi obtido. Normalmente são screenshots de telas, ou vídeos do software em funcionamento.
@@ -174,12 +176,17 @@ Apresente imagens e/ou vídeos que comprovam que um determinado teste foi execut
 
 ## Evidência Caso de Teste CT-08: Editar Post
 
+- Nessa evidência fica comprovado nas fotos que após ter criado o post, e se comparado com a evidência do caso de teste 07, houve uma mudança no contúdo do título da postagem e que é 
+comprovada na imagem seguinte no feed da Hub da Solidariedade.
+
 ![CT08](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/a878fbb5-d9a0-4bf1-8ec2-b22f09b2cdd8)
 ![CT08_1](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/c3149a29-cc7a-427f-a616-fadeab881374)
 
 ---
 
 ## Evidência Caso de Teste CT-09: Instituição/Usuário não poderá se logar sem fornecer credenciais de acesso corretas.
+
+- Nessa evidência fica comprovada que o não preenchimento das credenciais de acesso resulta na mensagem de erro, para ambos os cadastros (Instituição e Usuário).
 
 ![ct09](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/76b0c789-203b-465f-ae7f-302af30c883a)
 
@@ -195,7 +202,9 @@ Apresente imagens e/ou vídeos que comprovam que um determinado teste foi execut
 
 ---
 
-## Evidência Caso de Teste CT-11: Usuário não pode apagar comentário de outro usuário  
+## Evidência Caso de Teste CT-11: Usuário/Instituiçao não pode apagar comentário de outro usuário 
+
+- Nessa evidência fica comprovado que o usuário ou instituição não podem apagar comentários dos quais não criou.
 
 ![ct11](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/915bac1b-3b84-4c03-9512-3c8561978b37)
 
