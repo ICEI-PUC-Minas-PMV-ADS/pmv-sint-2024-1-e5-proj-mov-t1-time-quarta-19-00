@@ -1,4 +1,5 @@
 ![Hub da Solidariedade (1)](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/22857183/c3ab5ce7-4701-45d5-8cff-edd39417ebf3)
+![Hub da Solidariedade - Apresentação Formal](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/22857183/ec6b52df-8d43-4eeb-ab9f-800c1b7397bf)
 
 # Hub da Solidariedade
 
