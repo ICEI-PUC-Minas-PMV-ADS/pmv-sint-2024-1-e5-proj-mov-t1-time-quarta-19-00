@@ -86,10 +86,10 @@ _________________________________________________
 
 ## Fluxo de Telas
 
-Acesse o fluxo de telas pelo Miro [aqui](https://miro.com/app/board/uXjVK5U_G8A=/?share_link_id=945470029772).
+Acesse o fluxo de telas pelo Miro [aqui](https://miro.com/app/board/uXjVK5U_G8A=/?share_link_id=296242845437).
 
 Preview:
-![image](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/97611971/21d4d877-481c-49f5-a7b0-2bec94a4f2b6)
+![image](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/79456516/05956fd3-5af6-4ab4-860b-4706d10ada8b)
 
 
 
