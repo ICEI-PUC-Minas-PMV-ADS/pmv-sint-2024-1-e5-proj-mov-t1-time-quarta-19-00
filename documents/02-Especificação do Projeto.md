@@ -60,3 +60,20 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 </center>
 
 Como tecnologias adotaremos na API a utilização da linguagem de programação Python com o FastAPI, em banco de dados utilizaremos o sqlite e o aplicativo será desenvolvido utilizando como base o React Native.
+
+
+## Fluxo BMP da Instituição e Usário 
+
+- Instituição
+
+  ![BPM_INSTITUIÇÃO](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/aeaf3a01-6536-41ef-8324-fa0dc1897cdc)
+
+---
+
+- Usuário
+
+  ![BMP_USUÁRIO](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-sint-2024-1-e5-proj-mov-t1-time-quarta-19-00/assets/90725686/e4059aad-7380-48b4-b577-6febbe11e30d)
+
+---
+
+ 
